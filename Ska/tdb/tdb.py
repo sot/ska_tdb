@@ -3,7 +3,6 @@
 :Author: Tom Aldcroft
 :Copyright: 2012 Smithsonian Astrophysical Observatory
 """
-import cPickle as pickle
 import os
 import re
 import numpy as np
@@ -12,7 +11,11 @@ from .version import version as __version__
 
 TDB_VERSIONS = (4, 6, 7, 8, 9, 10)
 TDB_VERSION = 10
+
+# Set None values for module globals that are set in set_tdb_version
 DATA_DIR = None
+tables = None
+msids = None
 
 # Tables with MSID column.  Might not be complete.
 MSID_TABLES = ['tmsrment', 'tpc', 'tsc', 'tpp', 'tlmt', 'tcntr',
@@ -116,7 +119,7 @@ class TableView(object):
         if isinstance(item, basestring):
             item = item.upper()
             if (item not in self.data.dtype.names and
-                'MSID' in self.data.dtype.names):
+                    'MSID' in self.data.dtype.names):
                 ok = self.data['MSID'] == item
                 new_data = self.data[ok]
                 if len(new_data) == 1:
