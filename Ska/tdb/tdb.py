@@ -9,6 +9,9 @@ import numpy as np
 
 from .version import version as __version__
 
+__all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version',
+           'TableView', 'MsidView']
+
 TDB_VERSIONS = (4, 6, 7, 8, 9, 10)
 TDB_VERSION = 10
 
