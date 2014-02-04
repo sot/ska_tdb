@@ -1,0 +1,9 @@
+To create the package data files which store the TDB, do:
+
+% python make_tdb.py
+
+This creates files in Ska/tdb/data/p0<VERSION>/.
+
+These files are not version controlled so that the repo can be on github.
+DO NOT add to repo.
+
