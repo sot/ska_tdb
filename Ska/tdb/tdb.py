@@ -191,9 +191,9 @@ class MsidView(object):
         ok0 = [match_re.search(x) is not None
                for x in msids.msid]
         ok1 = [match_re.search(x) is not None
-               for x in msids.description.filled('')]
+               for x in msids.description]
         ok2 = [match_re.search(x) is not None
-               for x in msids.technical_name.filled('')]
+               for x in msids.technical_name]
         ok = np.array(ok0) | np.array(ok1) | np.array(ok2)
         return [msids[x] for x in tables['tmsrment']['MSID'][ok]]
 
