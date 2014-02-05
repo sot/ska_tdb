@@ -27,8 +27,8 @@ corresponding to the TDB table name.
 
 Examples::
 
-  from Ska.tdb import msids
-  msids.<TAB>  # See available attributes
+  >>> from Ska.tdb import msids
+  >>> msids.<TAB>  # See available attributes
 
 This returns the following, where all the TDB tables with MSID data begin with
 capital "T" and columns from the ``tmsrment`` table are available as lower case
@@ -49,23 +49,48 @@ If you examine any of those attributes for the ``msids`` variable you get the re
 
 Now select a particular MSID and see that it has the same attributes::
 
-  tephin = msids['tephin']
-  tephin.<TAB>  # See available attributes
+  >>> tephin = msids['tephin']
+  >>> tephin.<TAB>  # See available attributes
+  tephin.Tcntr                        tephin.calibration_type             tephin.limit_default_set_num
+  tephin.Tlmt                         tephin.counter_msid                 tephin.limit_switch_msid
+  tephin.Tloc                         tephin.data_type                    tephin.low_raw_count
+  tephin.Tmsrment                     tephin.description                  tephin.msid
+  tephin.Tpc                          tephin.ehs_header_flag              tephin.owner_id
+  tephin.Tpp                          tephin.eng_unit                     tephin.prop
+  tephin.Tsc                          tephin.es_default_set_num           tephin.range_msid
+  tephin.Tsmpl                        tephin.es_switch_msid               tephin.technical_name
+  tephin.calibration_default_set_num  tephin.find                         tephin.total_length
+  tephin.calibration_switch_msid      tephin.high_raw_count               
 
 Finally look at the attributes::
 
-  tephin.Tmsrment  # MSID definition (description, tech name etc)
-  tephin.Tpp  # Calibration point pair values
-  tephin.Tsc  # No state codes so it returns None
-  tephin.technical_name
-  tephin.data_type
+  >>> tephin.Tmsrment  # MSID definition (description, tech name etc)
+  ('TEPHIN', 'EPHIN SENSOR HOUSING TEMP', 'IUNS', 'PP', 'DEGF', 0, 255, 8, 
+   'N', '0', '0', '0', 1, '0', 1, '0', 0, 'THM', 'LR/15/PA/2', 'U')
+  >>> tephin.Tpp  # Calibration point pair values
+  array([('TEPHIN', 1, 15, 232, -51.90456), ('TEPHIN', 1, 9, 110, 47.0923),
+         ('TEPHIN', 1, 14, 223, -38.30814),
+         ('TEPHIN', 1, 13, 214, -27.81212),
+         ('TEPHIN', 1, 12, 203, -17.23066), ('TEPHIN', 1, 11, 190, -6.5357),
+         ('TEPHIN', 1, 10, 172, 6.45808), ('TEPHIN', 1, 16, 255, -103.49045),
+         ('TEPHIN', 1, 1, 0, 215.03), ('TEPHIN', 1, 7, 76, 72.95052),
+         ('TEPHIN', 1, 6, 64, 84.09784), ('TEPHIN', 1, 5, 54, 94.86368),
+         ('TEPHIN', 1, 4, 46, 104.89), ('TEPHIN', 1, 3, 38, 116.7678),
+         ('TEPHIN', 1, 2, 28, 135.846), ('TEPHIN', 1, 8, 91, 60.77076)], 
+        dtype=[('MSID', '|S14'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+               ('RAW_COUNT', '<i8'), ('ENG_UNIT_VALUE', '<f8')])
+  >>> tephin.Tsc  # No state codes so it returns None
+  >>> tephin.technical_name
+  'EPHIN SENSOR HOUSING TEMP'
+  >>> tephin.data_type
+  'IUNS'
 
 Finding MSIDs
 ++++++++++++++
 
 With the ``msids`` object you can search the TDB for MSIDs of interest::
 
-  msids.find('teph')
+  >>> msids.find('teph')
 
 This returns a list of :class:`~Ska.tdb.tdb.MsidView` objects::
 
@@ -77,9 +102,14 @@ This returns a list of :class:`~Ska.tdb.tdb.MsidView` objects::
 
 If required you can dig deeper, for instance::
 
-  tephs = msids.find('teph')
-  [(x.msid, x.description, x.data_type) for x in tephs]
-
+  >>> tephs = msids.find('teph')
+  >>> for x in tephs:
+  ...     print(x.msid, x.description, x.data_type)
+  ('TEPHIN', 'LR/15/PA/2', 'IUNS')
+  ('TEPHTRP1', 'EP/3/SD/0 ISATS MOM BEIA0W01 BIT 3 EIA/RCTU-EP PRI HTR ON/OFF (CH0)', 'IDIS')
+  ('TEPHTRP2', 'EP/3/SD/1 ISATS MOM BEIA1W01 BIT 3 EIA/RCTU-EP PRI HTR ON/OFF (CH1)', 'IDIS')
+  ('TEPHTRR1', 'EP/3/SD/0 ISATS MOM BEIA0W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH0)', 'IDIS')
+  ('TEPHTRR2', 'EP/3/SD/1 ISATS MOM BEIA1W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH1)', 'IDIS')
 
 Tables
 ^^^^^^^^
@@ -96,22 +126,63 @@ available tables::
 
 You then select a table with the table name (which must be lower case)::
 
-  tmsrment = tables['tmsrment']
+  >>> tmsrment = tables['tmsrment']
 
 With this table selected you can show the table, show all columns for that
 table, or get the values for a particular column::
 
-  tmsrment  # show the table
-  tmsrment.colnames  # column names for this table
-  tmsrment['technical_name']
+  >>> tmsrment  # show the table
+    ... <SNIP> ...
+  >>> tmsrment.colnames  # column names for this table
+  ('MSID', 'TECHNICAL_NAME', 'DATA_TYPE', 'CALIBRATION_TYPE', 'ENG_UNIT', 'LOW_RAW_COUNT',
+  'HIGH_RAW_COUNT', 'TOTAL_LENGTH', 'PROP', 'COUNTER_MSID', 'RANGE_MSID', 'CALIBRATION_SWITCH_MSID',
+  'CALIBRATION_DEFAULT_SET_NUM', 'LIMIT_SWITCH_MSID', 'LIMIT_DEFAULT_SET_NUM', 'ES_SWITCH_MSID',
+  'ES_DEFAULT_SET_NUM', 'OWNER_ID', 'DESCRIPTION', 'EHS_HEADER_FLAG')
+  >>> tmsrment['technical_name']
+  array(['OFFLINE SCIENCE DATA FOR ACIS 1 OF 2',
+         'OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL', 'CAMERA BODY TEMP. A',
+         ..., 'RCS-2 thruster valve 01 temperature (OBC reading)',
+         'RCS-2 thruster valve 02 temperature (OBC reading)',
+         'ACIS High Radiation Flag'], 
+        dtype='|S59')
 
 For tables that have an MSID column you can filter on the MSID to see only
 entries for that MSID.  The MSID names are case-insensitive.
 
-  tmsrment['tephin']  # only TEPHIN entries
-  tables['tsc']['aoattqt4']  # State codes for AOATTQT4
-  tables['tpp']['TEPHIN']  # Point pair for TEPHIN
+  >>> tmsrment['tephin']  # only TEPHIN entries
+  ('TEPHIN', 'EPHIN SENSOR HOUSING TEMP', 'IUNS', 'PP', 'DEGF', 0, 255, 8, 'N',
+  '0', '0', '0', 1, '0', 1, '0', 0, 'THM', 'LR/15/PA/2', 'U')
+  >>> tables['tsc']['aoattqt4']  # State codes for AOATTQT4
+  array([], dtype=[('MSID', '|S15'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+  ('LOW_RAW_COUNT', '<i8'), ('HIGH_RAW_COUNT', '<i8'), ('STATE_CODE', '|S4')])
+  >>> tables['tpp']['TEPHIN']  # Point pair for TEPHIN
+  array([('TEPHIN', 1, 15, 232, -51.90456), ('TEPHIN', 1, 9, 110, 47.0923),
+         ('TEPHIN', 1, 14, 223, -38.30814),
+         ('TEPHIN', 1, 13, 214, -27.81212),
+         ('TEPHIN', 1, 12, 203, -17.23066), ('TEPHIN', 1, 11, 190, -6.5357),
+         ('TEPHIN', 1, 10, 172, 6.45808), ('TEPHIN', 1, 16, 255, -103.49045),
+         ('TEPHIN', 1, 1, 0, 215.03), ('TEPHIN', 1, 7, 76, 72.95052),
+         ('TEPHIN', 1, 6, 64, 84.09784), ('TEPHIN', 1, 5, 54, 94.86368),
+         ('TEPHIN', 1, 4, 46, 104.89), ('TEPHIN', 1, 3, 38, 116.7678),
+         ('TEPHIN', 1, 2, 28, 135.846), ('TEPHIN', 1, 8, 91, 60.77076)], 
+        dtype=[('MSID', '|S14'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+               ('RAW_COUNT', '<i8'), ('ENG_UNIT_VALUE', '<f8')])
 
+TDB version
+^^^^^^^^^^^
+
+P010 is the default version of the TDB that is accessed.  To change this, specify
+the new version as an integer, e.g. ``8`` for version P008.  In this example we
+roll back time to P008 when the TEPHIN database limits were much lower::
+
+  >>> msids['tephin'].Tlmt
+  ('TEPHIN', 1, 10.0, 150.0, 5.0, 999.0, 0, 5, 'A')
+
+  >>> import Ska.tdb
+  >>> Ska.tdb.set_tdb_version(8)
+
+  >>> msids['tephin'].Tlmt
+  ('TEPHIN', 1, 10.0, 81.0, 5.0, 86.0, 0, 5, 'A')
 
 API Documentation
 ------------------
