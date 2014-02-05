@@ -92,6 +92,9 @@ With the ``msids`` object you can search the TDB for MSIDs of interest::
 
   >>> msids.find('teph')
 
+This applies the specified search expression to the MSID name, description, and
+technical description.
+
 This returns a list of :class:`~Ska.tdb.tdb.MsidView` objects::
 
   [<MsidView msid="TEPHIN" technical_name="EPHIN SENSOR HOUSING TEMP">,
@@ -99,6 +102,11 @@ This returns a list of :class:`~Ska.tdb.tdb.MsidView` objects::
    <MsidView msid="TEPHTRP2" technical_name="HTR ENA/DIS: EIA/RCTU-EP/PSU1 PRI (CH1)">,
    <MsidView msid="TEPHTRR1" technical_name="HTR ENA/DIS: EIA/RCTU-EP/PSU1 RDNT (CH0)">,
    <MsidView msid="TEPHTRR2" technical_name="HTR ENA/DIS: EIA/RCTU-EP/PSU1 RDNT (CH1)">]
+
+The search value can be any valid Python regular expression, for instance ``pea1`` followed
+by at least one character followed by ``temperature``::a
+
+  >>> msids.find('pea1.+temperature')
 
 If required you can dig deeper, for instance::
 
