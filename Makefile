@@ -1,5 +1,19 @@
-PYDOCS_HG=/home/aldcroft/hg/pydocs
+# Define the task name
+TASK = Ska.tdb
+
+# Set Flight environment to be SKA.  The other choice is TST.  Include the
+# Makefile.FLIGHT make file that does most of the hard work
+FLIGHT = SKA
+include /proj/sot/ska/include/Makefile.FLIGHT
+
+WWW  = $(INSTALL)/www
+# Define the installed executables for the task.  This directory is reserved
+# for documented tools and not for dedicated scripts, one-off codes etc
+DOC = docs/_build/html/*
+
+doc:
+	cd doc; make html
 
 install_doc:
-	cp doc/index.rst $(PYDOCS_HG)/Ska.tdb.rst
-	cp doc/Ska.tdb_api.rst $(PYDOCS_HG)/Ska.tdb_api.rst
+	mkdir -p $(INSTALL_DOC)
+	rsync --archive --times $(DOC)   $(INSTALL_DOC)/
