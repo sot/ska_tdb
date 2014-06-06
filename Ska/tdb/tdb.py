@@ -242,4 +242,4 @@ class MsidView(object):
             return object.__repr__(self)
 
 
-set_tdb_version(TDB_VERSION)
+set_tdb_version()  # Choose the most recent version
