@@ -5,6 +5,8 @@
 """
 import os
 import re
+import glob
+
 import numpy as np
 
 from .version import version as __version__
@@ -12,10 +14,10 @@ from .version import version as __version__
 __all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version',
            'TableView', 'MsidView']
 
-TDB_VERSIONS = (4, 6, 7, 8, 9, 10)
-TDB_VERSION = 10
 
 # Set None values for module globals that are set in set_tdb_version
+TDB_VERSIONS = None
+TDB_VERSION = None
 DATA_DIR = None
 tables = None
 msids = None
@@ -48,17 +50,23 @@ TMSRMENT_COLS = """
                 """.lower().split()
 
 
-def set_tdb_version(version):
+def set_tdb_version(version=None):
     """
     Set the version of the TDB which is used.
 
-    :param version: TDB version (integer, e.g. 10)
+    :param version: TDB version (integer or None => latest)
     """
     global TDB_VERSION
+    global TDB_VERSIONS
     global DATA_DIR
     global tables
     global msids
-    if version not in TDB_VERSIONS:
+    version_dirs = glob.glob(os.path.join(os.path.dirname(__file__), 'data', 'p0??'))
+    TDB_VERSIONS = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
+
+    if version is None:
+        version = TDB_VERSIONS[-1]
+    elif version not in TDB_VERSIONS:
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
     TDB_VERSION = version
@@ -234,4 +242,4 @@ class MsidView(object):
             return object.__repr__(self)
 
 
-set_tdb_version(TDB_VERSION)
+set_tdb_version()  # Choose the most recent version

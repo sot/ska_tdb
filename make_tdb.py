@@ -1,28 +1,33 @@
 """
-Make the numpy data files that are used by Ska.tdb.
+Make the numpy data files that are used by Ska.tdb.  From the repo root directory:
 
 % python make_tdb.py
 
-This creates files in Ska/tdb/data/p0<VERSION>/.
+This creates files in ./Ska/tdb/data/p0<VERSION>/.
 """
 
 from __future__ import print_function
 
 import os
+import glob
 
 import numpy as np
 from astropy.io import ascii
 
 TDB_ROOT = '/proj/sot/ska/ops/TDB'
 
-# Run this within the data/ directory, then move pck files to tdb/data/.
-#                            Reader=asciitable.Rdb, fill_values=[('', '0')])
-
 names = 'tcntr tes tlmt tloc tmsrment towner tpc tpp tsc tsmpl tstream ttdm_fmt ttdm'.split()
 
-for version in (4, 6, 7, 8, 9, 10):
-    TDB_version = 'p{:03d}'.format(version)
+TDB_versions = [os.path.basename(x) for x in glob.glob(os.path.join(TDB_ROOT, 'p0??'))]
+
+for TDB_version in sorted(TDB_versions):
+    out_path = os.path.join('Ska', 'tdb', 'data', TDB_version)
+    if os.path.exists(out_path):
+        print('Skipping TDB version {}'.format(TDB_version))
+        continue
+    os.mkdir(out_path)
     print('Processing TDB version {}'.format(TDB_version))
+
     for name in names:
         filename = os.path.join(TDB_ROOT, TDB_version, name + '.txt')
         print(name, filename)
@@ -56,7 +61,4 @@ for version in (4, 6, 7, 8, 9, 10):
         print('Masked : {}'.format(dat.masked))
         print()
 
-        out_path = os.path.join('Ska', 'tdb', 'data', TDB_version)
-        if not os.path.exists(out_path):
-            os.mkdir(out_path)
         np.save(os.path.join(out_path, name + '.npy'), dat)
