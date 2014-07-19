@@ -4,4 +4,5 @@ dist
 doc/_build
 TDB
 Ska/tdb/data/
+*.pyc
 

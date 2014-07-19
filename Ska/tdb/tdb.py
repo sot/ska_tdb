@@ -15,6 +15,8 @@ __all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version
            'TableView', 'MsidView']
 
 
+SKA = os.environ.get('SKA', os.path.join('proj', 'sot', 'ska'))
+
 # Set None values for module globals that are set in set_tdb_version
 TDB_VERSIONS = None
 TDB_VERSION = None
@@ -61,7 +63,7 @@ def set_tdb_version(version=None):
     global DATA_DIR
     global tables
     global msids
-    version_dirs = glob.glob(os.path.join(os.path.dirname(__file__), 'data', 'p0??'))
+    version_dirs = glob.glob(os.path.join(SKA, 'data', 'Ska.tdb', 'p0??'))
     TDB_VERSIONS = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
 
     if version is None:
@@ -70,8 +72,7 @@ def set_tdb_version(version=None):
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
     TDB_VERSION = version
-    DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            'data', 'p{:03d}'.format(TDB_VERSION))
+    DATA_DIR = os.path.join(SKA, 'data', 'Ska.tdb', 'p{:03d}'.format(TDB_VERSION))
     tables = TableDict()
     msids = MsidView()
 

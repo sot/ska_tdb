@@ -10,5 +10,4 @@ setup(name='Ska.tdb',
       version=version,
       packages=['Ska', 'Ska.tdb'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
-      package_data={'Ska.tdb': ['data/p0*/*.npy']},
       )
