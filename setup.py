@@ -8,6 +8,8 @@ setup(name='Ska.tdb',
       author_email='aldcroft@head.cfa.harvard.edu',
       py_modules=['Ska.tdb.tdb'],
       version=version,
+      zip_safe=False,
+      namespace_packages=['Ska'],
       packages=['Ska', 'Ska.tdb'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
       )

@@ -67,7 +67,10 @@ def set_tdb_version(version=None):
     TDB_VERSIONS = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
 
     if version is None:
-        version = TDB_VERSIONS[-1]
+        if TDB_VERSIONS:
+            version = TDB_VERSIONS[-1]
+        else:
+            version = 0  # Allow for package import / installation with no data
     elif version not in TDB_VERSIONS:
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
@@ -91,7 +94,7 @@ class TableDict(dict):
                 filename = os.path.join(DATA_DIR, item + '.npy')
                 self[item] = TableView(np.load(filename))
             except IOError:
-                raise KeyError("Table {} not in TDB files".format(item))
+                raise KeyError("Table {} not in TDB files (no file {})".format(item, filename))
         return dict.__getitem__(self, item)
 
     def keys(self):
