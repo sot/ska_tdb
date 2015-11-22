@@ -8,6 +8,6 @@ setup(name='Ska.tdb',
       author_email='aldcroft@head.cfa.harvard.edu',
       version=version,
       zip_safe=False,
-      packages=['Ska', 'Ska.tdb'],
+      packages=['Ska', 'Ska.tdb', 'Ska.tdb.tests'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
       )
