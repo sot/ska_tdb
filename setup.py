@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 from Ska.tdb.version import version
 
 setup(name='Ska.tdb',
@@ -6,10 +6,8 @@ setup(name='Ska.tdb',
       url="http://cxc.harvard.edu/mta/ASPECT/tool_doc/pydocs/Ska.tdb",
       description='Access to Chandra Telemetry Database (TDB)',
       author_email='aldcroft@head.cfa.harvard.edu',
-      py_modules=['Ska.tdb.tdb'],
       version=version,
       zip_safe=False,
-      namespace_packages=['Ska'],
       packages=['Ska', 'Ska.tdb'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
       )
