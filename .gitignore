@@ -3,6 +3,5 @@ MANIFEST
 dist
 doc/_build
 TDB
-Ska/tdb/data/
+data/
 *.pyc
-
