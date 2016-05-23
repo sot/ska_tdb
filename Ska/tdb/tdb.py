@@ -192,21 +192,36 @@ class MsidView(object):
                 setattr(self.__class__, attr,
                         property(MsidView._get_tmsrment_func(attr)))
 
-    def find(self, match):
-        """Find MSIDs with ``match`` in the ``msid``, ``description`` or
+    def find(self, *matches):
+        """Find MSIDs with one or more ``matches`` in the ``msid``, ``description`` or
         ``technical_name``.
 
-        :param match: regular expression to match
+        Examples::
+
+          >>> msids.find('tephin')
+          [<MsidView msid="TEPHIN" technical_name="EPHIN SENSOR HOUSING TEMP">]
+
+          >>> msids.find('aca', 'filter')
+          [<MsidView msid="AOACIDPX" technical_name="ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA">,
+           <MsidView msid="AOACIIRS" technical_name="ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA">,
+           <MsidView msid="AOACIMSS" technical_name="ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA">,
+           <MsidView msid="AOACISPX" technical_name="ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA">]
+
+        :param *matches: one or more regular expression to match
         :returns: list of matching MSIDs as MsidView objects
         """
-        match_re = re.compile(match, re.IGNORECASE)
-        ok0 = [match_re.search(x) is not None
-               for x in msids.msid]
-        ok1 = [match_re.search(x) is not None
-               for x in msids.description]
-        ok2 = [match_re.search(x) is not None
-               for x in msids.technical_name]
-        ok = np.array(ok0) | np.array(ok1) | np.array(ok2)
+        ok = np.ones(len(msids.msid), dtype=bool)
+
+        for match in matches:
+            match_re = re.compile(match, re.IGNORECASE)
+            ok0 = [match_re.search(x) is not None
+                   for x in msids.msid]
+            ok1 = [match_re.search(x) is not None
+                   for x in msids.description]
+            ok2 = [match_re.search(x) is not None
+                   for x in msids.technical_name]
+            ok &= np.array(ok0) | np.array(ok1) | np.array(ok2)
+
         return [msids[x] for x in tables['tmsrment']['MSID'][ok]]
 
     def __getitem__(self, item):
