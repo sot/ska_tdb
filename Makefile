@@ -14,6 +14,9 @@ DOC = doc/_build/html/*
 doc:
 	cd doc; make html
 
+install:
+	rsync -av data/ $(INSTALL_DATA)/
+
 install_doc:
 	mkdir -p $(INSTALL_DOC)
 	rsync --archive --times $(DOC)   $(INSTALL_DOC)/

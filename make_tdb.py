@@ -1,9 +1,18 @@
+#!/usr/bin/env python
 """
 Make the numpy data files that are used by Ska.tdb.  From the repo root directory:
 
-% python make_tdb.py
+$ ./make_tdb.py
 
-This creates files in ./Ska/tdb/data/p0<VERSION>/.
+This creates files in ./data/p0<VERSION>/.  These dirs get installed to $SKA/data/Ska.tdb
+via the Makefile with "make install".
+
+This requires that directories be in /proj/sot/ska/ops/TDB which are the '*.txt' files
+that have been created by CXCDS from the MSFC-1949 files.  These are normally supplied
+by DS (historically Ian Evans) following a TDB update.
+
+There is some normalization vs. the input 1949 files and my memory is that it isn't so
+trivial to make the .txt files (but this might be wrong).
 """
 
 from __future__ import print_function
@@ -21,10 +30,16 @@ names = 'tcntr tes tlmt tloc tmsrment towner tpc tpp tsc tsmpl tstream ttdm_fmt 
 TDB_versions = [os.path.basename(x) for x in glob.glob(os.path.join(TDB_ROOT, 'p0??'))]
 
 for TDB_version in sorted(TDB_versions):
-    out_path = os.path.join('Ska', 'tdb', 'data', TDB_version)
+    out_path = os.path.join('data', TDB_version)
     if os.path.exists(out_path):
-        print('Skipping TDB version {}'.format(TDB_version))
+        print('Skipping TDB version {}: already processed'.format(TDB_version))
         continue
+
+    if any(not os.path.exists(os.path.join(TDB_ROOT, TDB_version, name + '.txt'))
+           for name in names):
+        print('Skipping TDB version {}: input file(s) missing'.format(TDB_version))
+        continue
+
     os.mkdir(out_path)
     print('Processing TDB version {}'.format(TDB_version))
 

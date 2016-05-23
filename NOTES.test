@@ -1,0 +1,5 @@
+python setup.py test [With possible additional options like --addopts='-k select_tests -v -s']
+
+python
+import Ska.tdb
+Ska.tdb.test()
