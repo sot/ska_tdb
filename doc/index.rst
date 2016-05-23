@@ -119,6 +119,16 @@ If required you can dig deeper, for instance::
   ('TEPHTRR1', 'EP/3/SD/0 ISATS MOM BEIA0W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH0)', 'IDIS')
   ('TEPHTRR2', 'EP/3/SD/1 ISATS MOM BEIA1W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH1)', 'IDIS')
 
+Finally, you can provide multiple match arguments.  This then returns the
+logical-and result of running the ``find()`` call for each argument individually.
+
+  >>> msids.find('aca', 'filter')
+  [<MsidView msid="AOACIDPX" technical_name="ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA">,
+   <MsidView msid="AOACIIRS" technical_name="ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA">,
+   <MsidView msid="AOACIMSS" technical_name="ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA">,
+   <MsidView msid="AOACISPX" technical_name="ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA">]
+
+
 Tables
 ^^^^^^^^
 

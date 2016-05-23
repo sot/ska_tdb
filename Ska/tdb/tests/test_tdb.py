@@ -1,7 +1,7 @@
 from .. import msids, tables, set_tdb_version, get_tdb_version
 
 # Set to fixed version for regression testing
-TDB_VERSION = 12
+TDB_VERSION = 14
 set_tdb_version(TDB_VERSION)
 
 tmsrment_colnames = (
@@ -24,6 +24,16 @@ def test_msids():
 
     vals = msids.find('teph')
     assert [v.msid for v in vals] == ['TEPHIN', 'TEPHTRP1', 'TEPHTRP2', 'TEPHTRR1', 'TEPHTRR2']
+
+
+def test_find():
+    ms = msids.find('tephin')
+    assert len(ms) == 1
+    assert ms[0].msid == 'TEPHIN'
+
+    ms = msids.find('aca', 'filter')
+    assert len(ms) == 4
+    assert set([m.msid for m in ms]) == set(["AOACIDPX", "AOACIIRS", "AOACIMSS", "AOACISPX"])
 
 
 def test_tables():
