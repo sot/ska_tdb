@@ -1,7 +1,9 @@
 from .tdb import *
 
 
-def test(*args):
-    """Run self tests"""
+def test(*args, **kwargs):
+    import os
     import pytest
-    pytest.main(list(args))
+    pkg_path = os.path.dirname(__file__)
+    os.chdir(pkg_path)
+    pytest.main(list(args), **kwargs)
