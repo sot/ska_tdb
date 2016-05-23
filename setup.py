@@ -8,6 +8,8 @@ setup(name='Ska.tdb',
       author_email='aldcroft@head.cfa.harvard.edu',
       version=version,
       zip_safe=False,
+      setup_requires=['pytest-runner'],
       packages=['Ska', 'Ska.tdb', 'Ska.tdb.tests'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
+      tests_require=['pytest'],
       )
