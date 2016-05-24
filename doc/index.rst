@@ -4,8 +4,8 @@ Access the Chandra Telemetry Database
 
 The ``Ska.tdb`` package provides a convenient mechanism to retrieve all data in
 the Chandra ODB Telemetry Database (TDB) tables.  The default values correspond
-to the P010 definitions available in the CSV (text) dump of the TDB.  Versions
-P004, P006, P007, P008, and P009 are also accessible (see `TDB version`_).
+to the latest definitions available in the CSV (text) dump of the TDB.  Versions
+going back to P004 are also accessible (see `TDB version`_).
 
 A description of the tables is availble in the `TDB table definitions`_ section.
 
