@@ -207,7 +207,7 @@ class MsidView(object):
            <MsidView msid="AOACIMSS" technical_name="ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA">,
            <MsidView msid="AOACISPX" technical_name="ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA">]
 
-        :param *matches: one or more regular expression to match
+        :param \*matches: one or more regular expression to match
         :returns: list of matching MSIDs as MsidView objects
         """
         ok = np.ones(len(msids.msid), dtype=bool)

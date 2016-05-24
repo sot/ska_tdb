@@ -20,9 +20,6 @@ import sys, os
 
 rootpath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, rootpath)
-print sys.path
-if 'Ska' in sys.modules:
-    del sys.modules['Ska']
 import Ska.tdb
 
 # -- General configuration -----------------------------------------------------
