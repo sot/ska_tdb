@@ -1,5 +1,22 @@
+import sys
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
+
 from Ska.tdb.version import version
+
+
+class PyTest(TestCommand):
+    user_options = [('args=', 'a', "Arguments to pass to py.test")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.args = []
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.args)
+        sys.exit(errno)
+
 
 setup(name='Ska.tdb',
       author='Tom Aldcroft',
@@ -8,8 +25,8 @@ setup(name='Ska.tdb',
       author_email='aldcroft@head.cfa.harvard.edu',
       version=version,
       zip_safe=False,
-      setup_requires=['pytest-runner'],
       packages=['Ska', 'Ska.tdb', 'Ska.tdb.tests'],
       package_dir={'Ska.tdb': 'Ska/tdb'},
       tests_require=['pytest'],
+      cmdclass={'test': PyTest}
       )
