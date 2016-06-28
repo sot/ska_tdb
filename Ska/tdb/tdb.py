@@ -15,7 +15,7 @@ __all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version
            'TableView', 'MsidView']
 
 
-SKA = os.environ.get('SKA', os.path.join('proj', 'sot', 'ska'))
+SKA = os.environ.get('SKA', os.path.join(os.sep, 'proj', 'sot', 'ska'))
 
 # Set None values for module globals that are set in set_tdb_version
 TDB_VERSIONS = None
