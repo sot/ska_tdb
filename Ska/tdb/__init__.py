@@ -1,9 +1,11 @@
 from .tdb import *
 
+__version__ = '3.5.1'
+
 
 def test(*args, **kwargs):
-    import os
-    import pytest
-    pkg_path = os.path.dirname(__file__)
-    os.chdir(pkg_path)
-    pytest.main(list(args), **kwargs)
+    '''
+    Run py.test unit tests.
+    '''
+    import testr
+    return testr.test(*args, **kwargs)

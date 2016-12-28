@@ -10,9 +10,7 @@ import glob
 import numpy as np
 import six
 
-from .version import version as __version__
-
-__all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version',
+__all__ = ['msids', 'tables', 'set_tdb_version', 'get_tdb_version',
            'TableView', 'MsidView']
 
 
