@@ -8,10 +8,9 @@ import re
 import glob
 
 import numpy as np
+import six
 
-from .version import version as __version__
-
-__all__ = ['msids', 'tables', '__version__', 'set_tdb_version', 'get_tdb_version',
+__all__ = ['msids', 'tables', 'set_tdb_version', 'get_tdb_version',
            'TableView', 'MsidView']
 
 
@@ -128,10 +127,26 @@ class TableView(object):
       tables['tpp']['TEPHIN']  # Point pair for TEPHIN
     """
     def __init__(self, data):
-        self.data = data
+        if six.PY2 or isinstance(data, np.void):
+            # np.void case is when TableView is passed a table row, in which case
+            # it has already been converted to string.
+            self.data = data
+
+        else:
+            # Convert numpy bytes (S) to string (U) within structured array
+            dtypes = []
+            for name, typestr in data.dtype.descr:
+                typestr = re.sub(r'S', 'U', typestr)
+                dtypes.append((name, typestr))
+            out = np.ndarray(len(data), dtype=dtypes)
+            for name in data.dtype.names:
+                # Note that numpy doesn't require explicit decode encoding to
+                # be specified.
+                out[name] = data[name]
+            self.data = out
 
     def __getitem__(self, item):
-        if isinstance(item, basestring):
+        if isinstance(item, six.string_types):
             item = item.upper()
             if (item not in self.data.dtype.names and
                     'MSID' in self.data.dtype.names):
