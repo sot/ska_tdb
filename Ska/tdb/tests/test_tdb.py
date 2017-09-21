@@ -1,3 +1,4 @@
+# Licensed under a 3-clause BSD style license - see LICENSE.rst
 from .. import msids, tables, set_tdb_version, get_tdb_version
 
 # Set to fixed version for regression testing
