@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Licensed under a 3-clause BSD style license - see LICENSE.rst
 """
 Make the numpy data files that are used by Ska.tdb.  From the repo root directory:
 
