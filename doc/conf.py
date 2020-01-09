@@ -53,7 +53,7 @@ copyright = u'2012, Tom Aldcroft'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-from Ska.tdb.version import version as release
+from Ska.tdb import __version__ as release
 # The short X.Y version.
 version = '.'.join(release.split('.')[:2])
 
