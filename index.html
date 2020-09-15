@@ -1,0 +1,913 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ska.tdb &#8212; Ska.tdb 3.5.4.dev9+ge971f86 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Ska.tdb API documentation" href="Ska.tdb_api.html" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+
+  </head><body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="#"><span id="logotext1">Ska!</span><span id="logotext2">Ska</span><span id="logotext3">.tdb</span></a>
+  <ul>
+    
+    <li><a class="home" title="Homepage" href="">
+        <span id="logotext1"></span><span id="logotext2"></span>
+    </a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="Ska.tdb_api.html" title="Ska.tdb API documentation">
+	  next &raquo;
+	</a>
+      </li>
+      <li>
+	<a href="#">Ska.tdb 3.5.4.dev9+ge971f86 documentation</a>
+	 &#187;
+      </li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ska-tdb">
+<h1>Ska.tdb<a class="headerlink" href="#ska-tdb" title="Permalink to this headline">¶</a></h1>
+<p>Access the Chandra Telemetry Database</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code> package provides a convenient mechanism to retrieve all data in
+the Chandra ODB Telemetry Database (TDB) tables.  The default values correspond
+to the latest definitions available in the CSV (text) dump of the TDB.  Versions
+going back to P004 are also accessible (see <a class="reference internal" href="#tdb-version">TDB version</a>).</p>
+<p>A description of the tables is availble in the <a class="reference internal" href="#tdb-table-definitions">TDB table definitions</a> section.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The TDB table entries can be accessed via the module-level variables <code class="docutils literal notranslate"><span class="pre">tables</span></code>
+and <code class="docutils literal notranslate"><span class="pre">msids</span></code>.  The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable is the main workhorse for <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code>, while
+the <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable is needed for tables that do not have an MSID column.</p>
+<div class="section" id="msids">
+<h3>Msids<a class="headerlink" href="#msids" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable allows access to all information related to a particular
+MSID.  It behaves like a Python dict where you use the MSID name
+(case-insenstive) as the key.  Once you have a particular MSID selected you can
+then retrieve all table entries related to that MSID by accessing attributes
+corresponding to the TDB table name.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">msids</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
+</pre></div>
+</div>
+<p>This returns the following, where all the TDB tables with MSID data begin with
+capital “T” and columns from the <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code> table are available as lower case
+attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msids</span><span class="o">.</span><span class="n">Tcntr</span>                        <span class="n">msids</span><span class="o">.</span><span class="n">calibration_type</span>        <span class="n">msids</span><span class="o">.</span><span class="n">limit_switch_msid</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tlmt</span>                         <span class="n">msids</span><span class="o">.</span><span class="n">counter_msid</span>            <span class="n">msids</span><span class="o">.</span><span class="n">low_raw_count</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tloc</span>                         <span class="n">msids</span><span class="o">.</span><span class="n">data_type</span>               <span class="n">msids</span><span class="o">.</span><span class="n">msid</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tmsrment</span>                     <span class="n">msids</span><span class="o">.</span><span class="n">description</span>             <span class="n">msids</span><span class="o">.</span><span class="n">owner_id</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tpc</span>                          <span class="n">msids</span><span class="o">.</span><span class="n">ehs_header_flag</span>         <span class="n">msids</span><span class="o">.</span><span class="n">prop</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tpp</span>                          <span class="n">msids</span><span class="o">.</span><span class="n">eng_unit</span>                <span class="n">msids</span><span class="o">.</span><span class="n">range_msid</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tsc</span>                          <span class="n">msids</span><span class="o">.</span><span class="n">es_default_set_num</span>      <span class="n">msids</span><span class="o">.</span><span class="n">technical_name</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">Tsmpl</span>                        <span class="n">msids</span><span class="o">.</span><span class="n">es_switch_msid</span>          <span class="n">msids</span><span class="o">.</span><span class="n">total_length</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">calibration_default_set_num</span>  <span class="n">msids</span><span class="o">.</span><span class="n">high_raw_count</span>
+<span class="n">msids</span><span class="o">.</span><span class="n">calibration_switch_msid</span>      <span class="n">msids</span><span class="o">.</span><span class="n">limit_default_set_num</span>
+</pre></div>
+</div>
+<p>If you examine any of those attributes for the <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable you get the results for all MSIDS.</p>
+<p>Now select a particular MSID and see that it has the same attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span> <span class="o">=</span> <span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
+<span class="go">tephin.Tcntr                        tephin.calibration_type             tephin.limit_default_set_num</span>
+<span class="go">tephin.Tlmt                         tephin.counter_msid                 tephin.limit_switch_msid</span>
+<span class="go">tephin.Tloc                         tephin.data_type                    tephin.low_raw_count</span>
+<span class="go">tephin.Tmsrment                     tephin.description                  tephin.msid</span>
+<span class="go">tephin.Tpc                          tephin.ehs_header_flag              tephin.owner_id</span>
+<span class="go">tephin.Tpp                          tephin.eng_unit                     tephin.prop</span>
+<span class="go">tephin.Tsc                          tephin.es_default_set_num           tephin.range_msid</span>
+<span class="go">tephin.Tsmpl                        tephin.es_switch_msid               tephin.technical_name</span>
+<span class="go">tephin.calibration_default_set_num  tephin.find                         tephin.total_length</span>
+<span class="go">tephin.calibration_switch_msid      tephin.high_raw_count</span>
+</pre></div>
+</div>
+<p>Finally look at the attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tmsrment</span>  <span class="c1"># MSID definition (description, tech name etc)</span>
+<span class="go">(&#39;TEPHIN&#39;, &#39;EPHIN SENSOR HOUSING TEMP&#39;, &#39;IUNS&#39;, &#39;PP&#39;, &#39;DEGF&#39;, 0, 255, 8,</span>
+<span class="go"> &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;THM&#39;, &#39;LR/15/PA/2&#39;, &#39;U&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tpp</span>  <span class="c1"># Calibration point pair values</span>
+<span class="go">array([(&#39;TEPHIN&#39;, 1, 15, 232, -51.90456), (&#39;TEPHIN&#39;, 1, 9, 110, 47.0923),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 14, 223, -38.30814),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 13, 214, -27.81212),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 12, 203, -17.23066), (&#39;TEPHIN&#39;, 1, 11, 190, -6.5357),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 10, 172, 6.45808), (&#39;TEPHIN&#39;, 1, 16, 255, -103.49045),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 1, 0, 215.03), (&#39;TEPHIN&#39;, 1, 7, 76, 72.95052),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 6, 64, 84.09784), (&#39;TEPHIN&#39;, 1, 5, 54, 94.86368),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 4, 46, 104.89), (&#39;TEPHIN&#39;, 1, 3, 38, 116.7678),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 2, 28, 135.846), (&#39;TEPHIN&#39;, 1, 8, 91, 60.77076)],</span>
+<span class="go">      dtype=[(&#39;MSID&#39;, &#39;|S14&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">             (&#39;RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;ENG_UNIT_VALUE&#39;, &#39;&lt;f8&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># No state codes so it returns None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">technical_name</span>
+<span class="go">&#39;EPHIN SENSOR HOUSING TEMP&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">data_type</span>
+<span class="go">&#39;IUNS&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="finding-msids">
+<h4>Finding MSIDs<a class="headerlink" href="#finding-msids" title="Permalink to this headline">¶</a></h4>
+<p>With the <code class="docutils literal notranslate"><span class="pre">msids</span></code> object you can search the TDB for MSIDs of interest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;teph&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This applies the specified search expression to the MSID name, description, and
+technical description.</p>
+<p>This returns a list of <a class="reference internal" href="Ska.tdb_api.html#Ska.tdb.tdb.MsidView" title="Ska.tdb.tdb.MsidView"><code class="xref py py-class docutils literal notranslate"><span class="pre">MsidView</span></code></a> objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHIN&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;EPHIN SENSOR HOUSING TEMP&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRP1&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 PRI (CH0)&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRP2&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 PRI (CH1)&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRR1&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 RDNT (CH0)&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRR2&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 RDNT (CH1)&quot;</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The search value can be any valid Python regular expression, for instance <code class="docutils literal notranslate"><span class="pre">pea1</span></code> followed
+by at least one character followed by <code class="docutils literal notranslate"><span class="pre">temperature</span></code>::a</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;pea1.+temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If required you can dig deeper, for instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tephs</span> <span class="o">=</span> <span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;teph&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tephs</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">msid</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">data_type</span><span class="p">)</span>
+<span class="go">(&#39;TEPHIN&#39;, &#39;LR/15/PA/2&#39;, &#39;IUNS&#39;)</span>
+<span class="go">(&#39;TEPHTRP1&#39;, &#39;EP/3/SD/0 ISATS MOM BEIA0W01 BIT 3 EIA/RCTU-EP PRI HTR ON/OFF (CH0)&#39;, &#39;IDIS&#39;)</span>
+<span class="go">(&#39;TEPHTRP2&#39;, &#39;EP/3/SD/1 ISATS MOM BEIA1W01 BIT 3 EIA/RCTU-EP PRI HTR ON/OFF (CH1)&#39;, &#39;IDIS&#39;)</span>
+<span class="go">(&#39;TEPHTRR1&#39;, &#39;EP/3/SD/0 ISATS MOM BEIA0W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH0)&#39;, &#39;IDIS&#39;)</span>
+<span class="go">(&#39;TEPHTRR2&#39;, &#39;EP/3/SD/1 ISATS MOM BEIA1W09 BIT 3 EIA/RCTU-EP RDNT HTR ON/OFF (CH1)&#39;, &#39;IDIS&#39;)</span>
+</pre></div>
+</div>
+<p>Finally, you can provide multiple match arguments.  This then returns the
+logical-and result of running the <code class="docutils literal notranslate"><span class="pre">find()</span></code> call for each argument individually.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;aca&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">)</span>
+<span class="go">[&lt;MsidView msid=&quot;AOACIDPX&quot; technical_name=&quot;ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACIIRS&quot; technical_name=&quot;ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACIMSS&quot; technical_name=&quot;ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACISPX&quot; technical_name=&quot;ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA&quot;&gt;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tables">
+<h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable allows direct access to TDB tables.  This variable is a
+special dict object that returns a <code class="docutils literal notranslate"><span class="pre">TableView</span></code> object when you ask for a TDB
+table such as <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code> (MSID descriptions) or <code class="docutils literal notranslate"><span class="pre">tsc</span></code> (MSID state codes).</p>
+<p>After you import the <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable you can ask for the names of all
+available tables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">tables</span>
+<span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># show all available tables</span>
+</pre></div>
+</div>
+<p>You then select a table with the table name (which must be lower case):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tmsrment&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>With this table selected you can show the table, show all columns for that
+table, or get the values for a particular column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span>  <span class="c1"># show the table</span>
+<span class="go">  ... &lt;SNIP&gt; ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="o">.</span><span class="n">colnames</span>  <span class="c1"># column names for this table</span>
+<span class="go">(&#39;MSID&#39;, &#39;TECHNICAL_NAME&#39;, &#39;DATA_TYPE&#39;, &#39;CALIBRATION_TYPE&#39;, &#39;ENG_UNIT&#39;, &#39;LOW_RAW_COUNT&#39;,</span>
+<span class="go">&#39;HIGH_RAW_COUNT&#39;, &#39;TOTAL_LENGTH&#39;, &#39;PROP&#39;, &#39;COUNTER_MSID&#39;, &#39;RANGE_MSID&#39;, &#39;CALIBRATION_SWITCH_MSID&#39;,</span>
+<span class="go">&#39;CALIBRATION_DEFAULT_SET_NUM&#39;, &#39;LIMIT_SWITCH_MSID&#39;, &#39;LIMIT_DEFAULT_SET_NUM&#39;, &#39;ES_SWITCH_MSID&#39;,</span>
+<span class="go">&#39;ES_DEFAULT_SET_NUM&#39;, &#39;OWNER_ID&#39;, &#39;DESCRIPTION&#39;, &#39;EHS_HEADER_FLAG&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;technical_name&#39;</span><span class="p">]</span>
+<span class="go">array([&#39;OFFLINE SCIENCE DATA FOR ACIS 1 OF 2&#39;,</span>
+<span class="go">       &#39;OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL&#39;, &#39;CAMERA BODY TEMP. A&#39;,</span>
+<span class="go">       ..., &#39;RCS-2 thruster valve 01 temperature (OBC reading)&#39;,</span>
+<span class="go">       &#39;RCS-2 thruster valve 02 temperature (OBC reading)&#39;,</span>
+<span class="go">       &#39;ACIS High Radiation Flag&#39;],</span>
+<span class="go">      dtype=&#39;|S59&#39;)</span>
+</pre></div>
+</div>
+<p>For tables that have an MSID column you can filter on the MSID to see only
+entries for that MSID.  The MSID names are case-insensitive.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>  <span class="c1"># only TEPHIN entries</span>
+<span class="go">(&#39;TEPHIN&#39;, &#39;EPHIN SENSOR HOUSING TEMP&#39;, &#39;IUNS&#39;, &#39;PP&#39;, &#39;DEGF&#39;, 0, 255, 8, &#39;N&#39;,</span>
+<span class="go">&#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;THM&#39;, &#39;LR/15/PA/2&#39;, &#39;U&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tsc&#39;</span><span class="p">][</span><span class="s1">&#39;aoattqt4&#39;</span><span class="p">]</span>  <span class="c1"># State codes for AOATTQT4</span>
+<span class="go">array([], dtype=[(&#39;MSID&#39;, &#39;|S15&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">(&#39;LOW_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;HIGH_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;STATE_CODE&#39;, &#39;|S4&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tpp&#39;</span><span class="p">][</span><span class="s1">&#39;TEPHIN&#39;</span><span class="p">]</span>  <span class="c1"># Point pair for TEPHIN</span>
+<span class="go">array([(&#39;TEPHIN&#39;, 1, 15, 232, -51.90456), (&#39;TEPHIN&#39;, 1, 9, 110, 47.0923),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 14, 223, -38.30814),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 13, 214, -27.81212),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 12, 203, -17.23066), (&#39;TEPHIN&#39;, 1, 11, 190, -6.5357),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 10, 172, 6.45808), (&#39;TEPHIN&#39;, 1, 16, 255, -103.49045),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 1, 0, 215.03), (&#39;TEPHIN&#39;, 1, 7, 76, 72.95052),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 6, 64, 84.09784), (&#39;TEPHIN&#39;, 1, 5, 54, 94.86368),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 4, 46, 104.89), (&#39;TEPHIN&#39;, 1, 3, 38, 116.7678),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 2, 28, 135.846), (&#39;TEPHIN&#39;, 1, 8, 91, 60.77076)],</span>
+<span class="go">      dtype=[(&#39;MSID&#39;, &#39;|S14&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">             (&#39;RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;ENG_UNIT_VALUE&#39;, &#39;&lt;f8&#39;)])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tdb-version">
+<h3>TDB version<a class="headerlink" href="#tdb-version" title="Permalink to this headline">¶</a></h3>
+<p>P010 is the default version of the TDB that is accessed.  To change this, specify
+the new version as an integer, e.g. <code class="docutils literal notranslate"><span class="pre">8</span></code> for version P008.  In this example we
+roll back time to P008 when the TEPHIN database limits were much lower:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tlmt</span>
+<span class="go">(&#39;TEPHIN&#39;, 1, 10.0, 150.0, 5.0, 999.0, 0, 5, &#39;A&#39;)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Ska.tdb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Ska</span><span class="o">.</span><span class="n">tdb</span><span class="o">.</span><span class="n">set_tdb_version</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tlmt</span>
+<span class="go">(&#39;TEPHIN&#39;, 1, 10.0, 81.0, 5.0, 86.0, 0, 5, &#39;A&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="api-documentation">
+<h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Ska.tdb_api.html">Ska.tdb API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Ska.tdb_api.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tdb-table-definitions">
+<h2>TDB table definitions<a class="headerlink" href="#tdb-table-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tcntr">
+<h3>tcntr<a class="headerlink" href="#tcntr" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>INIT_VALUE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>END_VALUE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>WRAP_AROUND_FLAG</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>DIR</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-even"><td><p>DELTA</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>COUNTER_TYPE</p></td>
+<td><p>string(3)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tes">
+<h3>tes<a class="headerlink" href="#tes" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(15)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>EXPECTED_STATE</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOLER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>EM_ALL_SAMP_FLAG</p></td>
+<td><p>string(1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tlmt">
+<h3>tlmt<a class="headerlink" href="#tlmt" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(14)</p></td>
+</tr>
+<tr class="row-odd"><td><p>LIMIT_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>CAUTION_LOW</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAUTION_HIGH</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>WARNING_LOW</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>WARNING_HIGH</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>DELTA</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOLER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>EM_ALL_SAMP_FLAG</p></td>
+<td><p>string(1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tloc">
+<h3>tloc<a class="headerlink" href="#tloc" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(15)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>SYLLABLE_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>START_MINOR_FRAME</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>START_WORD</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>START_BIT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>LENGTH</p></td>
+<td><p>int</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tmsrment">
+<h3>tmsrment<a class="headerlink" href="#tmsrment" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 71%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(15)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TECHNICAL_NAME</p></td>
+<td><p>string(59)</p></td>
+</tr>
+<tr class="row-even"><td><p>DATA_TYPE</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CALIBRATION_TYPE</p></td>
+<td><p>string(2)</p></td>
+</tr>
+<tr class="row-even"><td><p>ENG_UNIT</p></td>
+<td><p>string(7)</p></td>
+</tr>
+<tr class="row-odd"><td><p>LOW_RAW_COUNT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>HIGH_RAW_COUNT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOTAL_LENGTH</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>PROP</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>COUNTER_MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-even"><td><p>RANGE_MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CALIBRATION_SWITCH_MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-even"><td><p>CALIBRATION_DEFAULT_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>LIMIT_SWITCH_MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-even"><td><p>LIMIT_DEFAULT_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_SWITCH_MSID</p></td>
+<td><p>string(7)</p></td>
+</tr>
+<tr class="row-even"><td><p>ES_DEFAULT_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>OWNER_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-even"><td><p>DESCRIPTION</p></td>
+<td><p>string(240)</p></td>
+</tr>
+<tr class="row-odd"><td><p>EHS_HEADER_FLAG</p></td>
+<td><p>string(1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="towner">
+<h3>towner<a class="headerlink" href="#towner" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 52%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>OWNER_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESCRIPTION</p></td>
+<td><p>string(53)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tpc">
+<h3>tpc<a class="headerlink" href="#tpc" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 66%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(9)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CALIBRATION_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>ENG_UNIT_LOW</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>ENG_UNIT_HIGH</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>DEG</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>COEF0</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>COEF1</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>COEF2</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>COEF3</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>COEF4</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>COEF5</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>COEF6</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>COEF7</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-odd"><td><p>COEF8</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>COEF9</p></td>
+<td><p>float</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tpp">
+<h3>tpp<a class="headerlink" href="#tpp" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 66%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(14)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CALIBRATION_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>SEQUENCE_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>RAW_COUNT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>ENG_UNIT_VALUE</p></td>
+<td><p>float</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tsc">
+<h3>tsc<a class="headerlink" href="#tsc" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 66%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(15)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CALIBRATION_SET_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>SEQUENCE_NUM</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>LOW_RAW_COUNT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>HIGH_RAW_COUNT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>STATE_CODE</p></td>
+<td><p>string(4)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tsmpl">
+<h3>tsmpl<a class="headerlink" href="#tsmpl" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MSID</p></td>
+<td><p>string(15)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>PAR_COMP</p></td>
+<td><p>string(2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SAMPLE_PER_GROUP</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>GROUP_SAMPLE_OFSET</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>SAMPLE_COMP</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-even"><td><p>SAMPLE_RATE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>OFSET</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>START_COUNTER_VALUE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>COUNTER_OFSET</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>LOW_RANGE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>HIGH_RANGE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>STATE_CODE</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONTEXT_PACKET_ID</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>CONTEXT_LVT_LOCATION</p></td>
+<td><p>int</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tstream">
+<h3>tstream<a class="headerlink" href="#tstream" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>STREAM_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_TYPE</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-even"><td><p>STREAM_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_FORMAT_ID</p></td>
+<td><p>string(3)</p></td>
+</tr>
+<tr class="row-even"><td><p>PROTOCOL</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_PRIORITY</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>STREAM_PROP</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>STREAM_OWNER_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-even"><td><p>STREAM_DESCRIPTION</p></td>
+<td><p>string(38)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ttdm">
+<h3>ttdm<a class="headerlink" href="#ttdm" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TDM_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>FORMAT_ID_MSID</p></td>
+<td><p>string(8)</p></td>
+</tr>
+<tr class="row-even"><td><p>TIME_MSID</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SYNC_PATTERN</p></td>
+<td><p>string(6)</p></td>
+</tr>
+<tr class="row-even"><td><p>SYNC_PATTERN_MSID</p></td>
+<td><p>string(7)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SYNC_LENGTH</p></td>
+<td><p>int</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ttdm-fmt">
+<h3>ttdm_fmt<a class="headerlink" href="#ttdm-fmt" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 74%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TDM_ID</p></td>
+<td><p>string(4)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDM_FORMAT_ID</p></td>
+<td><p>string(3)</p></td>
+</tr>
+<tr class="row-even"><td><p>FORMAT</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>BITS_PER_WORD</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>WORDS_PER_MINOR_FRAME</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>MINOR_FRAMES_PER_MAJOR_FRAME</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-even"><td><p>DATA_CYCLE</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAJOR_FRAME_PERIOD</p></td>
+<td><p>float</p></td>
+</tr>
+<tr class="row-even"><td><p>ENCAP_STREAM_NUMBER</p></td>
+<td><p>int</p></td>
+</tr>
+<tr class="row-odd"><td><p>ENCAP_BOUNDARY</p></td>
+<td><p>string(1)</p></td>
+</tr>
+<tr class="row-even"><td><p>ENCAP_FRAME_PER_PACKET</p></td>
+<td><p>int</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Ska.tdb</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#msids">Msids</a><ul>
+<li><a class="reference internal" href="#finding-msids">Finding MSIDs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tables">Tables</a></li>
+<li><a class="reference internal" href="#tdb-version">TDB version</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-documentation">API Documentation</a></li>
+<li><a class="reference internal" href="#tdb-table-definitions">TDB table definitions</a><ul>
+<li><a class="reference internal" href="#tcntr">tcntr</a></li>
+<li><a class="reference internal" href="#tes">tes</a></li>
+<li><a class="reference internal" href="#tlmt">tlmt</a></li>
+<li><a class="reference internal" href="#tloc">tloc</a></li>
+<li><a class="reference internal" href="#tmsrment">tmsrment</a></li>
+<li><a class="reference internal" href="#towner">towner</a></li>
+<li><a class="reference internal" href="#tpc">tpc</a></li>
+<li><a class="reference internal" href="#tpp">tpp</a></li>
+<li><a class="reference internal" href="#tsc">tsc</a></li>
+<li><a class="reference internal" href="#tsmpl">tsmpl</a></li>
+<li><a class="reference internal" href="#tstream">tstream</a></li>
+<li><a class="reference internal" href="#ttdm">ttdm</a></li>
+<li><a class="reference internal" href="#ttdm-fmt">ttdm_fmt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Ska.tdb_api.html"
+                        title="next chapter">Ska.tdb API documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/index.rst.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2012, Tom Aldcroft.<br/>
+    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 3.1.2. &nbsp;
+  </p>
+</footer>
+  </body>
+</html>

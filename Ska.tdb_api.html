@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ska.tdb API documentation &#8212; Ska.tdb 3.5.4.dev9+ge971f86 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Ska.tdb" href="index.html" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+
+  </head><body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">Ska!</span><span id="logotext2">Ska</span><span id="logotext3">.tdb</span></a>
+  <ul>
+    
+    <li><a class="home" title="Homepage" href="">
+        <span id="logotext1"></span><span id="logotext2"></span>
+    </a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="index.html" title="Ska.tdb">
+	  &laquo; previous
+	</a>
+	
+      </li>
+      <li>
+	<a href="index.html">Ska.tdb 3.5.4.dev9+ge971f86 documentation</a>
+	 &#187;
+      </li>
+      
+      <li>Ska.tdb API documentation</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-Ska.tdb.tdb">
+<span id="ska-tdb-api-documentation"></span><h1>Ska.tdb API documentation<a class="headerlink" href="#module-Ska.tdb.tdb" title="Permalink to this headline">¶</a></h1>
+<p>Ska.tdb: Access the Chandra Telemetry Database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Tom Aldcroft</p>
+</dd>
+<dt class="field-even">Copyright</dt>
+<dd class="field-even"><p>2012 Smithsonian Astrophysical Observatory</p>
+</dd>
+</dl>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="Ska.tdb.tdb.TableView">
+<em class="property">class </em><code class="sig-prename descclassname">Ska.tdb.tdb.</code><code class="sig-name descname">TableView</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.TableView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Access TDB tables directly.</p>
+<p>This class should be used through the module-level <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable.
+The <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable is a special dict object that returns a
+<code class="docutils literal notranslate"><span class="pre">TableView</span></code> object when you ask for a TDB table such as <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code>
+(MSID descriptions) or <code class="docutils literal notranslate"><span class="pre">tsc</span></code> (MSID state codes).</p>
+<p>For tables that have an MSID column you can filter on the MSID to see only
+entries for that MSID.  The MSID names are case-insensitive.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">tables</span>
+
+<span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># show all available tables</span>
+<span class="n">tmsrment</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tmsrment&#39;</span><span class="p">]</span>
+<span class="n">tmsrment</span>  <span class="c1"># show the table</span>
+<span class="n">tmsrment</span><span class="o">.</span><span class="n">colnames</span>  <span class="c1"># column names for this table</span>
+<span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;technical_name&#39;</span><span class="p">]</span>
+<span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>  <span class="c1"># only TEPHIN entries</span>
+<span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tsc&#39;</span><span class="p">][</span><span class="s1">&#39;aoattqt4&#39;</span><span class="p">]</span>  <span class="c1"># State codes for AOATTQT4</span>
+<span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tpp&#39;</span><span class="p">][</span><span class="s1">&#39;TEPHIN&#39;</span><span class="p">]</span>  <span class="c1"># Point pair for TEPHIN</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt id="Ska.tdb.tdb.MsidView">
+<em class="property">class </em><code class="sig-prename descclassname">Ska.tdb.tdb.</code><code class="sig-name descname">MsidView</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>View TDB data related to a particular MSID.</p>
+<p>This class should be used through the module-level <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable.
+This allows access to TDB table entries for the MSID (attributes starting
+with “T”) and TDB <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code> table columns (lower-case attributes).</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">msids</span>
+<span class="n">msids</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
+
+<span class="n">tephin</span> <span class="o">=</span> <span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>
+<span class="n">tephin</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
+<span class="n">tephin</span><span class="o">.</span><span class="n">Tmsrment</span>  <span class="c1"># MSID definition (description, tech name etc)</span>
+<span class="n">tephin</span><span class="o">.</span><span class="n">Tpp</span>  <span class="c1"># Calibration point pair values</span>
+<span class="n">tephin</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># No state codes so it returns None</span>
+<span class="n">tephin</span><span class="o">.</span><span class="n">technical_name</span>
+<span class="n">tephin</span><span class="o">.</span><span class="n">data_type</span>
+
+<span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># state codes</span>
+<span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">description</span>  <span class="c1"># description from tmsrment</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="Ska.tdb.tdb.MsidView.find">
+<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find MSIDs with one or more <code class="docutils literal notranslate"><span class="pre">matches</span></code> in the <code class="docutils literal notranslate"><span class="pre">msid</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code> or
+<code class="docutils literal notranslate"><span class="pre">technical_name</span></code>.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tephin&#39;</span><span class="p">)</span>
+<span class="go">[&lt;MsidView msid=&quot;TEPHIN&quot; technical_name=&quot;EPHIN SENSOR HOUSING TEMP&quot;&gt;]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;aca&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">)</span>
+<span class="go">[&lt;MsidView msid=&quot;AOACIDPX&quot; technical_name=&quot;ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACIIRS&quot; technical_name=&quot;ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACIMSS&quot; technical_name=&quot;ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA&quot;&gt;,</span>
+<span class="go"> &lt;MsidView msid=&quot;AOACISPX&quot; technical_name=&quot;ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA&quot;&gt;]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*matches</strong> – one or more regular expression to match</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of matching MSIDs as MsidView objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Ska.tdb API documentation</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Ska.tdb</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Ska.tdb_api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/Ska.tdb_api.rst.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2012, Tom Aldcroft.<br/>
+    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 3.1.2. &nbsp;
+  </p>
+</footer>
+  </body>
+</html>
