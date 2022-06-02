@@ -56,7 +56,10 @@ def set_tdb_version(version=None):
     """
     Set the version of the TDB which is used.
 
-    :param version: TDB version (integer or None => latest)
+    Parameters
+    ----------
+    version: str
+        TDB version (integer or None => latest)
     """
     global TDB_VERSION
     global TDB_VERSIONS
@@ -114,18 +117,86 @@ class TableView(object):
     For tables that have an MSID column you can filter on the MSID to see only
     entries for that MSID.  The MSID names are case-insensitive.
 
-    Examples::
+    Examples
+    --------
 
-      from Ska.tdb import tables
-
-      tables.keys()  # show all available tables
-      tmsrment = tables['tmsrment']
-      tmsrment  # show the table
-      tmsrment.colnames  # column names for this table
-      tmsrment['technical_name']
-      tmsrment['tephin']  # only TEPHIN entries
-      tables['tsc']['aoattqt4']  # State codes for AOATTQT4
-      tables['tpp']['TEPHIN']  # Point pair for TEPHIN
+    >>> from Ska.tdb import tables
+    >>> tables.keys()  # show all available tables
+    ['tstream',
+     'tloc',
+     'towner',
+     'tpp',
+     'tes',
+     'tpc',
+     'tsc',
+     'tcntr',
+     'ttdm_fmt',
+     'tmsrment',
+     'tlmt',
+     'tsmpl',
+     'ttdm']
+    >>> tmsrment = tables['tmsrment']
+    >>> tmsrment  # show the table
+    array([('1ACIS511', 'OFFLINE SCIENCE DATA FOR ACIS 1 OF 2', 'IUNS', 'N', '0', 0, 4294967295, 32, 'N', '0', '0', '0', 0, '0', 0, '0', 0, 'ACIS', 'SI/12/SD/2 512 BPS FOR BACKGROUND ACIS DOWNLINK. PART 1 OF 2 PARTS SPLIT TO ACCOMODATE TELEMETRY SLOT AVAILABILITY.', 'U'),  # noqa
+        ('1ACIS512', 'OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL', 'SUND', 'N', '0', 0,          0, 12, 'N', '0', '0', '0', 0, '0', 0, '0', 0, 'ACIS', 'SI/12/SD/2 512 BPS FOR BACKGROUND ACIS DOWNLINK. PART 1 OF 2 PARTS SPLIT TO ACCOMODATE TELEMETRY SLOT AVAILABILITY.', 'U'),  # noqa
+        ('1CBAT', 'CAMERA BODY TEMP. A', 'IUNS', 'PC', 'DEGC', 0,        255,  8, 'N', '0', '0', '0', 1, '0', 1, '0', 0, 'ACIS', 'SI/12/PA/9 +Z FACE OF ALUMINUM CAMERA BODY. PART NUMBER MF-118.', 'U'),  # noqa
+        ...,
+        ('AOALTHR2', 'MUPS Allowed Thruster Flag 2', 'IDIS', 'SC', '0', 0,          1,  1, 'N', '0', '0', '0', 1, '0', 0, '0', 1, 'PCAD', 'F_Allowed_Thruster(2)', 'U'),  # noqa
+        ('AOALTHR3', 'MUPS Allowed Thruster Flag 3', 'IDIS', 'SC', '0', 0,          1,  1, 'N', '0', '0', '0', 1, '0', 0, '0', 1, 'PCAD', 'F_Allowed_Thruster(3)', 'U'),  # noqa
+        ('AOALTHR4', 'MUPS Allowed Thruster Flag 4', 'IDIS', 'SC', '0', 0,          1,  1, 'N', '0', '0', '0', 1, '0', 0, '0', 1, 'PCAD', 'F_Allowed_Thruster(4)', 'U')],  # noqa
+        dtype=[('MSID', '<U15'), ('TECHNICAL_NAME', '<U59'), ('DATA_TYPE', '<U4'), ('CALIBRATION_TYPE', '<U2'), ('ENG_UNIT', '<U7'), ('LOW_RAW_COUNT', '<i8'), ('HIGH_RAW_COUNT', '<i8'), ('TOTAL_LENGTH', '<i8'), ('PROP', '<U1'), ('COUNTER_MSID', '<U8'), ('RANGE_MSID', '<U8'), ('CALIBRATION_SWITCH_MSID', '<U8'), ('CALIBRATION_DEFAULT_SET_NUM', '<i8'), ('LIMIT_SWITCH_MSID', '<U8'), ('LIMIT_DEFAULT_SET_NUM', '<i8'), ('ES_SWITCH_MSID', '<U7'), ('ES_DEFAULT_SET_NUM', '<i8'), ('OWNER_ID', '<U4'), ('DESCRIPTION', '<U240'), ('EHS_HEADER_FLAG', '<U1')])  # noqa
+    >>> tmsrment.colnames  # column names for this table
+    ('MSID',
+     'TECHNICAL_NAME',
+     'DATA_TYPE',
+     'CALIBRATION_TYPE',
+     'ENG_UNIT',
+     'LOW_RAW_COUNT',
+     'HIGH_RAW_COUNT',
+     'TOTAL_LENGTH',
+     'PROP',
+     'COUNTER_MSID',
+     'RANGE_MSID',
+     'CALIBRATION_SWITCH_MSID',
+     'CALIBRATION_DEFAULT_SET_NUM',
+     'LIMIT_SWITCH_MSID',
+     'LIMIT_DEFAULT_SET_NUM',
+     'ES_SWITCH_MSID',
+     'ES_DEFAULT_SET_NUM',
+     'OWNER_ID',
+     'DESCRIPTION',
+     'EHS_HEADER_FLAG')
+    >>> tmsrment['technical_name']
+    array(['OFFLINE SCIENCE DATA FOR ACIS 1 OF 2',
+           'OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL', 'CAMERA BODY TEMP. A',
+           ..., 'MUPS Allowed Thruster Flag 2',
+           'MUPS Allowed Thruster Flag 3', 'MUPS Allowed Thruster Flag 4'],
+          dtype='<U59')
+    >>> tmsrment['tephin']  # only TEPHIN entries
+    ('TEPHIN', 'EPHIN SENSOR HOUSING TEMP', 'IUNS', 'PP', 'DEGF', 0, 255, 8, 'N',
+     '0', '0', '0', 1, '0', 1, '0', 0, 'THM', 'LR/15/PA/2', 'U')
+    >>> tables['tsc']['aoattqt4']  # State codes for AOATTQT4
+    array([],
+          dtype=[('MSID', '<U15'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+              ('LOW_RAW_COUNT', '<i8'), ('HIGH_RAW_COUNT', '<i8'), ('STATE_CODE', '<U5')])
+    >>> tables['tpp']['TEPHIN']  # Point pair for TEPHIN
+    array([('TEPHIN', 1, 15, 232,  -51.90456),
+           ('TEPHIN', 1,  9, 110,   47.0923 ),
+           ('TEPHIN', 1, 14, 223,  -38.30814),
+           ('TEPHIN', 1, 13, 214,  -27.81212),
+           ('TEPHIN', 1, 12, 203,  -17.23066),
+           ('TEPHIN', 1, 11, 190,   -6.5357 ),
+           ('TEPHIN', 1, 10, 172,    6.45808),
+           ('TEPHIN', 1, 16, 255, -103.49045),
+           ('TEPHIN', 1,  1,   0,  215.03   ),
+           ('TEPHIN', 1,  7,  76,   72.95052),
+           ('TEPHIN', 1,  6,  64,   84.09784),
+           ('TEPHIN', 1,  5,  54,   94.86368),
+           ('TEPHIN', 1,  4,  46,  104.89   ),
+           ('TEPHIN', 1,  3,  38,  116.7678 ),
+           ('TEPHIN', 1,  2,  28,  135.846  ),
+           ('TEPHIN', 1,  8,  91,   60.77076)],
+          dtype=[('MSID', '<U14'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'), ('RAW_COUNT', '<i8'), ('ENG_UNIT_VALUE', '<f8')])
     """
     def __init__(self, data):
         if six.PY2 or isinstance(data, np.void):
@@ -149,8 +220,8 @@ class TableView(object):
     def __getitem__(self, item):
         if isinstance(item, six.string_types):
             item = item.upper()
-            if (item not in self.data.dtype.names and
-                    'MSID' in self.data.dtype.names):
+            if (item not in self.data.dtype.names
+                    and 'MSID' in self.data.dtype.names):
                 ok = self.data['MSID'] == item
                 new_data = self.data[ok]
                 if len(new_data) == 1:
@@ -180,21 +251,49 @@ class MsidView(object):
     This allows access to TDB table entries for the MSID (attributes starting
     with "T") and TDB ``tmsrment`` table columns (lower-case attributes).
 
-    Examples::
+    Examples
+    --------
 
-      from Ska.tdb import msids
-      msids.<TAB>  # See available attributes
-
-      tephin = msids['tephin']
-      tephin.<TAB>  # See available attributes
-      tephin.Tmsrment  # MSID definition (description, tech name etc)
-      tephin.Tpp  # Calibration point pair values
-      tephin.Tsc  # No state codes so it returns None
-      tephin.technical_name
-      tephin.data_type
-
-      msids['aopcadmd'].Tsc  # state codes
-      msids['aopcadmd'].description  # description from tmsrment
+    >>> from Ska.tdb import msids
+    >>> # msids.<TAB>  # See available attributes
+    >>> tephin = msids['tephin']
+    >>> # tephin.<TAB>  # See available attributes
+    >>> tephin.Tmsrment  # MSID definition (description, tech name etc)
+    ('TEPHIN', 'EPHIN SENSOR HOUSING TEMP', 'IUNS', 'PP', 'DEGF', 0, 255, 8, 'N',
+     '0', '0', '0', 1, '0', 1, '0', 0, 'THM', 'LR/15/PA/2', 'U')
+    >>> tephin.Tpp  # Calibration point pair values
+    array([('TEPHIN', 1, 15, 232,  -51.90456),
+        ('TEPHIN', 1,  9, 110,   47.0923 ),
+        ('TEPHIN', 1, 14, 223,  -38.30814),
+        ('TEPHIN', 1, 13, 214,  -27.81212),
+        ('TEPHIN', 1, 12, 203,  -17.23066),
+        ('TEPHIN', 1, 11, 190,   -6.5357 ),
+        ('TEPHIN', 1, 10, 172,    6.45808),
+        ('TEPHIN', 1, 16, 255, -103.49045),
+        ('TEPHIN', 1,  1,   0,  215.03   ),
+        ('TEPHIN', 1,  7,  76,   72.95052),
+        ('TEPHIN', 1,  6,  64,   84.09784),
+        ('TEPHIN', 1,  5,  54,   94.86368),
+        ('TEPHIN', 1,  4,  46,  104.89   ),
+        ('TEPHIN', 1,  3,  38,  116.7678 ),
+        ('TEPHIN', 1,  2,  28,  135.846  ),
+        ('TEPHIN', 1,  8,  91,   60.77076)],
+        dtype=[('MSID', '<U14'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+            ('RAW_COUNT', '<i8'), ('ENG_UNIT_VALUE', '<f8')])
+    >>> tephin.Tsc  # No state codes so it returns None
+    >>> tephin.technical_name
+    'EPHIN SENSOR HOUSING TEMP'
+    >>> tephin.data_type
+    'IUNS'
+    >>> msids['aopcadmd'].Tsc  # state codes
+    array([('AOPCADMD', 1, 1, 0, 0, 'STBY'), ('AOPCADMD', 1, 7, 6, 6, 'NULL'),
+        ('AOPCADMD', 1, 6, 5, 5, 'RMAN'), ('AOPCADMD', 1, 5, 4, 4, 'PWRF'),
+        ('AOPCADMD', 1, 4, 3, 3, 'NSUN'), ('AOPCADMD', 1, 2, 1, 1, 'NPNT'),
+        ('AOPCADMD', 1, 3, 2, 2, 'NMAN')],
+        dtype=[('MSID', '<U15'), ('CALIBRATION_SET_NUM', '<i8'), ('SEQUENCE_NUM', '<i8'),
+            ('LOW_RAW_COUNT', '<i8'), ('HIGH_RAW_COUNT', '<i8'), ('STATE_CODE', '<U5')])
+    >>> msids['aopcadmd'].description  # description from tmsrment
+    'LR/15/SD/10 PCAD_MODE'
     """
     def __init__(self, msid=None):
         self._msid = msid
@@ -212,19 +311,27 @@ class MsidView(object):
         """Find MSIDs with one or more ``matches`` in the ``msid``, ``description`` or
         ``technical_name``.
 
-        Examples::
+        Examples
+        --------
 
-          >>> msids.find('tephin')
-          [<MsidView msid="TEPHIN" technical_name="EPHIN SENSOR HOUSING TEMP">]
+        >>> msids.find('tephin')
+        [<MsidView msid="TEPHIN" technical_name="EPHIN SENSOR HOUSING TEMP">]
 
-          >>> msids.find('aca', 'filter')
-          [<MsidView msid="AOACIDPX" technical_name="ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA">,
-           <MsidView msid="AOACIIRS" technical_name="ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA">,
-           <MsidView msid="AOACIMSS" technical_name="ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA">,
-           <MsidView msid="AOACISPX" technical_name="ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA">]
+        >>> msids.find('aca', 'filter')
+        [<MsidView msid="AOACIDPX" technical_name="ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA">,    # noqa
+        <MsidView msid="AOACIIRS" technical_name="ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA">,  # noqa
+        <MsidView msid="AOACIMSS" technical_name="ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA">,      # noqa
+        <MsidView msid="AOACISPX" technical_name="ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA">]     # noqa
 
-        :param \*matches: one or more regular expression to match
-        :returns: list of matching MSIDs as MsidView objects
+        Parameters
+        ----------
+        *matches:
+            One or more regular expression to match
+
+        Returns
+        -------
+        list
+            List of matching MSIDs as MsidView objects
         """
         ok = np.ones(len(msids.msid), dtype=bool)
 
