@@ -4,16 +4,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ska.tdb API documentation &#8212; Ska.tdb 3.6.0 documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-astropy.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Ska.tdb API documentation &#8212; Ska.tdb 3.6.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-astropy.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <script type="text/javascript" src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -54,7 +54,7 @@
 	
       </li>
       <li>
-	<a href="index.html">Ska.tdb 3.6.0 documentation</a>
+	<a href="index.html">Ska.tdb 3.6.1 documentation</a>
 	 &#187;
       </li>
       
@@ -68,7 +68,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-Ska.tdb.tdb">
+  <section id="module-Ska.tdb.tdb">
 <span id="ska-tdb-api-documentation"></span><h1>Ska.tdb API documentation<a class="headerlink" href="#module-Ska.tdb.tdb" title="Permalink to this headline">¶</a></h1>
 <p>Ska.tdb: Access the Chandra Telemetry Database</p>
 <dl class="field-list simple">
@@ -79,11 +79,11 @@
 <dd class="field-even"><p>2012 Smithsonian Astrophysical Observatory</p>
 </dd>
 </dl>
-<div class="section" id="classes">
+<section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="Ska.tdb.tdb.TableView">
-<em class="property">class </em><code class="sig-prename descclassname">Ska.tdb.tdb.</code><code class="sig-name descname">TableView</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.TableView" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="Ska.tdb.tdb.TableView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Ska.tdb.tdb.</span></span><span class="sig-name descname"><span class="pre">TableView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.TableView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Access TDB tables directly.</p>
 <p>This class should be used through the module-level <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable.
@@ -92,75 +92,173 @@ The <code class="docutils literal notranslate"><span class="pre">tables</span></
 (MSID descriptions) or <code class="docutils literal notranslate"><span class="pre">tsc</span></code> (MSID state codes).</p>
 <p>For tables that have an MSID column you can filter on the MSID to see only
 entries for that MSID.  The MSID names are case-insensitive.</p>
-<p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">tables</span>
-
-<span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># show all available tables</span>
-<span class="n">tmsrment</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tmsrment&#39;</span><span class="p">]</span>
-<span class="n">tmsrment</span>  <span class="c1"># show the table</span>
-<span class="n">tmsrment</span><span class="o">.</span><span class="n">colnames</span>  <span class="c1"># column names for this table</span>
-<span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;technical_name&#39;</span><span class="p">]</span>
-<span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>  <span class="c1"># only TEPHIN entries</span>
-<span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tsc&#39;</span><span class="p">][</span><span class="s1">&#39;aoattqt4&#39;</span><span class="p">]</span>  <span class="c1"># State codes for AOATTQT4</span>
-<span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tpp&#39;</span><span class="p">][</span><span class="s1">&#39;TEPHIN&#39;</span><span class="p">]</span>  <span class="c1"># Point pair for TEPHIN</span>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">tables</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># show all available tables</span>
+<span class="go">[&#39;tstream&#39;,</span>
+<span class="go"> &#39;tloc&#39;,</span>
+<span class="go"> &#39;towner&#39;,</span>
+<span class="go"> &#39;tpp&#39;,</span>
+<span class="go"> &#39;tes&#39;,</span>
+<span class="go"> &#39;tpc&#39;,</span>
+<span class="go"> &#39;tsc&#39;,</span>
+<span class="go"> &#39;tcntr&#39;,</span>
+<span class="go"> &#39;ttdm_fmt&#39;,</span>
+<span class="go"> &#39;tmsrment&#39;,</span>
+<span class="go"> &#39;tlmt&#39;,</span>
+<span class="go"> &#39;tsmpl&#39;,</span>
+<span class="go"> &#39;ttdm&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tmsrment&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span>  <span class="c1"># show the table</span>
+<span class="go">array([(&#39;1ACIS511&#39;, &#39;OFFLINE SCIENCE DATA FOR ACIS 1 OF 2&#39;, &#39;IUNS&#39;, &#39;N&#39;, &#39;0&#39;, 0, 4294967295, 32, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 0, &#39;0&#39;, 0, &#39;0&#39;, 0, &#39;ACIS&#39;, &#39;SI/12/SD/2 512 BPS FOR BACKGROUND ACIS DOWNLINK. PART 1 OF 2 PARTS SPLIT TO ACCOMODATE TELEMETRY SLOT AVAILABILITY.&#39;, &#39;U&#39;),  # noqa</span>
+<span class="go">    (&#39;1ACIS512&#39;, &#39;OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL&#39;, &#39;SUND&#39;, &#39;N&#39;, &#39;0&#39;, 0,          0, 12, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 0, &#39;0&#39;, 0, &#39;0&#39;, 0, &#39;ACIS&#39;, &#39;SI/12/SD/2 512 BPS FOR BACKGROUND ACIS DOWNLINK. PART 1 OF 2 PARTS SPLIT TO ACCOMODATE TELEMETRY SLOT AVAILABILITY.&#39;, &#39;U&#39;),  # noqa</span>
+<span class="go">    (&#39;1CBAT&#39;, &#39;CAMERA BODY TEMP. A&#39;, &#39;IUNS&#39;, &#39;PC&#39;, &#39;DEGC&#39;, 0,        255,  8, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;ACIS&#39;, &#39;SI/12/PA/9 +Z FACE OF ALUMINUM CAMERA BODY. PART NUMBER MF-118.&#39;, &#39;U&#39;),  # noqa</span>
+<span class="go">    ...,</span>
+<span class="go">    (&#39;AOALTHR2&#39;, &#39;MUPS Allowed Thruster Flag 2&#39;, &#39;IDIS&#39;, &#39;SC&#39;, &#39;0&#39;, 0,          1,  1, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;0&#39;, 1, &#39;PCAD&#39;, &#39;F_Allowed_Thruster(2)&#39;, &#39;U&#39;),  # noqa</span>
+<span class="go">    (&#39;AOALTHR3&#39;, &#39;MUPS Allowed Thruster Flag 3&#39;, &#39;IDIS&#39;, &#39;SC&#39;, &#39;0&#39;, 0,          1,  1, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;0&#39;, 1, &#39;PCAD&#39;, &#39;F_Allowed_Thruster(3)&#39;, &#39;U&#39;),  # noqa</span>
+<span class="go">    (&#39;AOALTHR4&#39;, &#39;MUPS Allowed Thruster Flag 4&#39;, &#39;IDIS&#39;, &#39;SC&#39;, &#39;0&#39;, 0,          1,  1, &#39;N&#39;, &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;0&#39;, 1, &#39;PCAD&#39;, &#39;F_Allowed_Thruster(4)&#39;, &#39;U&#39;)],  # noqa</span>
+<span class="go">    dtype=[(&#39;MSID&#39;, &#39;&lt;U15&#39;), (&#39;TECHNICAL_NAME&#39;, &#39;&lt;U59&#39;), (&#39;DATA_TYPE&#39;, &#39;&lt;U4&#39;), (&#39;CALIBRATION_TYPE&#39;, &#39;&lt;U2&#39;), (&#39;ENG_UNIT&#39;, &#39;&lt;U7&#39;), (&#39;LOW_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;HIGH_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;TOTAL_LENGTH&#39;, &#39;&lt;i8&#39;), (&#39;PROP&#39;, &#39;&lt;U1&#39;), (&#39;COUNTER_MSID&#39;, &#39;&lt;U8&#39;), (&#39;RANGE_MSID&#39;, &#39;&lt;U8&#39;), (&#39;CALIBRATION_SWITCH_MSID&#39;, &#39;&lt;U8&#39;), (&#39;CALIBRATION_DEFAULT_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;LIMIT_SWITCH_MSID&#39;, &#39;&lt;U8&#39;), (&#39;LIMIT_DEFAULT_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;ES_SWITCH_MSID&#39;, &#39;&lt;U7&#39;), (&#39;ES_DEFAULT_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;OWNER_ID&#39;, &#39;&lt;U4&#39;), (&#39;DESCRIPTION&#39;, &#39;&lt;U240&#39;), (&#39;EHS_HEADER_FLAG&#39;, &#39;&lt;U1&#39;)])  # noqa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="o">.</span><span class="n">colnames</span>  <span class="c1"># column names for this table</span>
+<span class="go">(&#39;MSID&#39;,</span>
+<span class="go"> &#39;TECHNICAL_NAME&#39;,</span>
+<span class="go"> &#39;DATA_TYPE&#39;,</span>
+<span class="go"> &#39;CALIBRATION_TYPE&#39;,</span>
+<span class="go"> &#39;ENG_UNIT&#39;,</span>
+<span class="go"> &#39;LOW_RAW_COUNT&#39;,</span>
+<span class="go"> &#39;HIGH_RAW_COUNT&#39;,</span>
+<span class="go"> &#39;TOTAL_LENGTH&#39;,</span>
+<span class="go"> &#39;PROP&#39;,</span>
+<span class="go"> &#39;COUNTER_MSID&#39;,</span>
+<span class="go"> &#39;RANGE_MSID&#39;,</span>
+<span class="go"> &#39;CALIBRATION_SWITCH_MSID&#39;,</span>
+<span class="go"> &#39;CALIBRATION_DEFAULT_SET_NUM&#39;,</span>
+<span class="go"> &#39;LIMIT_SWITCH_MSID&#39;,</span>
+<span class="go"> &#39;LIMIT_DEFAULT_SET_NUM&#39;,</span>
+<span class="go"> &#39;ES_SWITCH_MSID&#39;,</span>
+<span class="go"> &#39;ES_DEFAULT_SET_NUM&#39;,</span>
+<span class="go"> &#39;OWNER_ID&#39;,</span>
+<span class="go"> &#39;DESCRIPTION&#39;,</span>
+<span class="go"> &#39;EHS_HEADER_FLAG&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;technical_name&#39;</span><span class="p">]</span>
+<span class="go">array([&#39;OFFLINE SCIENCE DATA FOR ACIS 1 OF 2&#39;,</span>
+<span class="go">       &#39;OFFLINE SCIENCE DATA FOR ACIS ADDITIONAL&#39;, &#39;CAMERA BODY TEMP. A&#39;,</span>
+<span class="go">       ..., &#39;MUPS Allowed Thruster Flag 2&#39;,</span>
+<span class="go">       &#39;MUPS Allowed Thruster Flag 3&#39;, &#39;MUPS Allowed Thruster Flag 4&#39;],</span>
+<span class="go">      dtype=&#39;&lt;U59&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tmsrment</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>  <span class="c1"># only TEPHIN entries</span>
+<span class="go">(&#39;TEPHIN&#39;, &#39;EPHIN SENSOR HOUSING TEMP&#39;, &#39;IUNS&#39;, &#39;PP&#39;, &#39;DEGF&#39;, 0, 255, 8, &#39;N&#39;,</span>
+<span class="go"> &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;THM&#39;, &#39;LR/15/PA/2&#39;, &#39;U&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tsc&#39;</span><span class="p">][</span><span class="s1">&#39;aoattqt4&#39;</span><span class="p">]</span>  <span class="c1"># State codes for AOATTQT4</span>
+<span class="go">array([],</span>
+<span class="go">      dtype=[(&#39;MSID&#39;, &#39;&lt;U15&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">          (&#39;LOW_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;HIGH_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;STATE_CODE&#39;, &#39;&lt;U5&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;tpp&#39;</span><span class="p">][</span><span class="s1">&#39;TEPHIN&#39;</span><span class="p">]</span>  <span class="c1"># Point pair for TEPHIN</span>
+<span class="go">array([(&#39;TEPHIN&#39;, 1, 15, 232,  -51.90456),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  9, 110,   47.0923 ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 14, 223,  -38.30814),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 13, 214,  -27.81212),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 12, 203,  -17.23066),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 11, 190,   -6.5357 ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 10, 172,    6.45808),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1, 16, 255, -103.49045),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  1,   0,  215.03   ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  7,  76,   72.95052),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  6,  64,   84.09784),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  5,  54,   94.86368),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  4,  46,  104.89   ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  3,  38,  116.7678 ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  2,  28,  135.846  ),</span>
+<span class="go">       (&#39;TEPHIN&#39;, 1,  8,  91,   60.77076)],</span>
+<span class="go">      dtype=[(&#39;MSID&#39;, &#39;&lt;U14&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;), (&#39;RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;ENG_UNIT_VALUE&#39;, &#39;&lt;f8&#39;)])</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py class">
-<dt id="Ska.tdb.tdb.MsidView">
-<em class="property">class </em><code class="sig-prename descclassname">Ska.tdb.tdb.</code><code class="sig-name descname">MsidView</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="Ska.tdb.tdb.MsidView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Ska.tdb.tdb.</span></span><span class="sig-name descname"><span class="pre">MsidView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>View TDB data related to a particular MSID.</p>
 <p>This class should be used through the module-level <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable.
 This allows access to TDB table entries for the MSID (attributes starting
 with “T”) and TDB <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code> table columns (lower-case attributes).</p>
-<p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">msids</span>
-<span class="n">msids</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
-
-<span class="n">tephin</span> <span class="o">=</span> <span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>
-<span class="n">tephin</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
-<span class="n">tephin</span><span class="o">.</span><span class="n">Tmsrment</span>  <span class="c1"># MSID definition (description, tech name etc)</span>
-<span class="n">tephin</span><span class="o">.</span><span class="n">Tpp</span>  <span class="c1"># Calibration point pair values</span>
-<span class="n">tephin</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># No state codes so it returns None</span>
-<span class="n">tephin</span><span class="o">.</span><span class="n">technical_name</span>
-<span class="n">tephin</span><span class="o">.</span><span class="n">data_type</span>
-
-<span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># state codes</span>
-<span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">description</span>  <span class="c1"># description from tmsrment</span>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">msids</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># msids.&lt;TAB&gt;  # See available attributes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span> <span class="o">=</span> <span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># tephin.&lt;TAB&gt;  # See available attributes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tmsrment</span>  <span class="c1"># MSID definition (description, tech name etc)</span>
+<span class="go">(&#39;TEPHIN&#39;, &#39;EPHIN SENSOR HOUSING TEMP&#39;, &#39;IUNS&#39;, &#39;PP&#39;, &#39;DEGF&#39;, 0, 255, 8, &#39;N&#39;,</span>
+<span class="go"> &#39;0&#39;, &#39;0&#39;, &#39;0&#39;, 1, &#39;0&#39;, 1, &#39;0&#39;, 0, &#39;THM&#39;, &#39;LR/15/PA/2&#39;, &#39;U&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tpp</span>  <span class="c1"># Calibration point pair values</span>
+<span class="go">array([(&#39;TEPHIN&#39;, 1, 15, 232,  -51.90456),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  9, 110,   47.0923 ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 14, 223,  -38.30814),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 13, 214,  -27.81212),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 12, 203,  -17.23066),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 11, 190,   -6.5357 ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 10, 172,    6.45808),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1, 16, 255, -103.49045),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  1,   0,  215.03   ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  7,  76,   72.95052),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  6,  64,   84.09784),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  5,  54,   94.86368),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  4,  46,  104.89   ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  3,  38,  116.7678 ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  2,  28,  135.846  ),</span>
+<span class="go">    (&#39;TEPHIN&#39;, 1,  8,  91,   60.77076)],</span>
+<span class="go">    dtype=[(&#39;MSID&#39;, &#39;&lt;U14&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">        (&#39;RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;ENG_UNIT_VALUE&#39;, &#39;&lt;f8&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># No state codes so it returns None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">technical_name</span>
+<span class="go">&#39;EPHIN SENSOR HOUSING TEMP&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tephin</span><span class="o">.</span><span class="n">data_type</span>
+<span class="go">&#39;IUNS&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tsc</span>  <span class="c1"># state codes</span>
+<span class="go">array([(&#39;AOPCADMD&#39;, 1, 1, 0, 0, &#39;STBY&#39;), (&#39;AOPCADMD&#39;, 1, 7, 6, 6, &#39;NULL&#39;),</span>
+<span class="go">    (&#39;AOPCADMD&#39;, 1, 6, 5, 5, &#39;RMAN&#39;), (&#39;AOPCADMD&#39;, 1, 5, 4, 4, &#39;PWRF&#39;),</span>
+<span class="go">    (&#39;AOPCADMD&#39;, 1, 4, 3, 3, &#39;NSUN&#39;), (&#39;AOPCADMD&#39;, 1, 2, 1, 1, &#39;NPNT&#39;),</span>
+<span class="go">    (&#39;AOPCADMD&#39;, 1, 3, 2, 2, &#39;NMAN&#39;)],</span>
+<span class="go">    dtype=[(&#39;MSID&#39;, &#39;&lt;U15&#39;), (&#39;CALIBRATION_SET_NUM&#39;, &#39;&lt;i8&#39;), (&#39;SEQUENCE_NUM&#39;, &#39;&lt;i8&#39;),</span>
+<span class="go">        (&#39;LOW_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;HIGH_RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;STATE_CODE&#39;, &#39;&lt;U5&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;aopcadmd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">description</span>  <span class="c1"># description from tmsrment</span>
+<span class="go">&#39;LR/15/SD/10 PCAD_MODE&#39;</span>
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="Ska.tdb.tdb.MsidView.find">
-<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView.find" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="Ska.tdb.tdb.MsidView.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">matches</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Ska.tdb.tdb.MsidView.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find MSIDs with one or more <code class="docutils literal notranslate"><span class="pre">matches</span></code> in the <code class="docutils literal notranslate"><span class="pre">msid</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code> or
 <code class="docutils literal notranslate"><span class="pre">technical_name</span></code>.</p>
-<p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tephin&#39;</span><span class="p">)</span>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tephin&#39;</span><span class="p">)</span>
 <span class="go">[&lt;MsidView msid=&quot;TEPHIN&quot; technical_name=&quot;EPHIN SENSOR HOUSING TEMP&quot;&gt;]</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;aca&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">)</span>
-<span class="go">[&lt;MsidView msid=&quot;AOACIDPX&quot; technical_name=&quot;ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA&quot;&gt;,</span>
-<span class="go"> &lt;MsidView msid=&quot;AOACIIRS&quot; technical_name=&quot;ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA&quot;&gt;,</span>
-<span class="go"> &lt;MsidView msid=&quot;AOACIMSS&quot; technical_name=&quot;ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA&quot;&gt;,</span>
-<span class="go"> &lt;MsidView msid=&quot;AOACISPX&quot; technical_name=&quot;ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA&quot;&gt;]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;aca&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">)</span>
+<span class="go">[&lt;MsidView msid=&quot;AOACIDPX&quot; technical_name=&quot;ACA DATA PROCESSING DEFECTIVE PIXEL FILTER ENAB/DISA&quot;&gt;,    # noqa</span>
+<span class="go">&lt;MsidView msid=&quot;AOACIIRS&quot; technical_name=&quot;ACA DATA PROCESSING IONIZING RADIATION FILTER ENAB/DISA&quot;&gt;,  # noqa</span>
+<span class="go">&lt;MsidView msid=&quot;AOACIMSS&quot; technical_name=&quot;ACA DATA PROCESSING MULTIPLE STARS FILTER ENAB/DISA&quot;&gt;,      # noqa</span>
+<span class="go">&lt;MsidView msid=&quot;AOACISPX&quot; technical_name=&quot;ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA&quot;&gt;]     # noqa</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>*matches</strong> – one or more regular expression to match</p>
+<dd class="field-odd"><p><strong>*matches</strong> – One or more regular expression to match</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list of matching MSIDs as MsidView objects</p>
+<dd class="field-even"><p>List of matching MSIDs as MsidView objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -203,7 +301,7 @@ with “T”) and TDB <code class="docutils literal notranslate"><span class="pr
     <a href="#">Back to Top</a></p>
   <p>
     &copy; Copyright 2012, Tom Aldcroft.<br/>
-    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 3.1.2. &nbsp;
+    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 4.2.0. &nbsp;
   </p>
 </footer>
   </body>

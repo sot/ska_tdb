@@ -4,16 +4,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ska.tdb &#8212; Ska.tdb 3.6.0 documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-astropy.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Ska.tdb &#8212; Ska.tdb 3.6.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-astropy.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <script type="text/javascript" src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -53,7 +53,7 @@
 	</a>
       </li>
       <li>
-	<a href="#">Ska.tdb 3.6.0 documentation</a>
+	<a href="#">Ska.tdb 3.6.1 documentation</a>
 	 &#187;
       </li>
       
@@ -67,7 +67,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ska-tdb">
+  <section id="ska-tdb">
 <h1>Ska.tdb<a class="headerlink" href="#ska-tdb" title="Permalink to this headline">¶</a></h1>
 <p>Access the Chandra Telemetry Database</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code> package provides a convenient mechanism to retrieve all data in
@@ -75,12 +75,12 @@ the Chandra ODB Telemetry Database (TDB) tables.  The default values correspond
 to the latest definitions available in the CSV (text) dump of the TDB.  Versions
 going back to P004 are also accessible (see <a class="reference internal" href="#tdb-version">TDB version</a>).</p>
 <p>A description of the tables is availble in the <a class="reference internal" href="#tdb-table-definitions">TDB table definitions</a> section.</p>
-<div class="section" id="usage">
+<section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>The TDB table entries can be accessed via the module-level variables <code class="docutils literal notranslate"><span class="pre">tables</span></code>
 and <code class="docutils literal notranslate"><span class="pre">msids</span></code>.  The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable is the main workhorse for <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code>, while
 the <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable is needed for tables that do not have an MSID column.</p>
-<div class="section" id="msids">
+<section id="msids">
 <h3>Msids<a class="headerlink" href="#msids" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable allows access to all information related to a particular
 MSID.  It behaves like a Python dict where you use the MSID name
@@ -146,7 +146,7 @@ attributes:</p>
 <span class="go">&#39;IUNS&#39;</span>
 </pre></div>
 </div>
-<div class="section" id="finding-msids">
+<section id="finding-msids">
 <h4>Finding MSIDs<a class="headerlink" href="#finding-msids" title="Permalink to this headline">¶</a></h4>
 <p>With the <code class="docutils literal notranslate"><span class="pre">msids</span></code> object you can search the TDB for MSIDs of interest:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;teph&#39;</span><span class="p">)</span>
@@ -187,9 +187,9 @@ logical-and result of running the <code class="docutils literal notranslate"><sp
 <span class="go"> &lt;MsidView msid=&quot;AOACISPX&quot; technical_name=&quot;ACA DATA PROCESSING SATURATED PIXEL FILTER ENAB/DISA&quot;&gt;]</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="tables">
+</section>
+</section>
+<section id="tables">
 <h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable allows direct access to TDB tables.  This variable is a
 special dict object that returns a <code class="docutils literal notranslate"><span class="pre">TableView</span></code> object when you ask for a TDB
@@ -244,8 +244,8 @@ entries for that MSID.  The MSID names are case-insensitive.</p>
 <span class="go">             (&#39;RAW_COUNT&#39;, &#39;&lt;i8&#39;), (&#39;ENG_UNIT_VALUE&#39;, &#39;&lt;f8&#39;)])</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="tdb-version">
+</section>
+<section id="tdb-version">
 <h3>TDB version<a class="headerlink" href="#tdb-version" title="Permalink to this headline">¶</a></h3>
 <p>P010 is the default version of the TDB that is accessed.  To change this, specify
 the new version as an integer, e.g. <code class="docutils literal notranslate"><span class="pre">8</span></code> for version P008.  In this example we
@@ -260,9 +260,9 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 <span class="go">(&#39;TEPHIN&#39;, 1, 10.0, 81.0, 5.0, 86.0, 0, 5, &#39;A&#39;)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="api-documentation">
+</section>
+</section>
+<section id="api-documentation">
 <h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -272,10 +272,10 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="tdb-table-definitions">
+</section>
+<section id="tdb-table-definitions">
 <h2>TDB table definitions<a class="headerlink" href="#tdb-table-definitions" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="tcntr">
+<section id="tcntr">
 <h3>tcntr<a class="headerlink" href="#tcntr" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -314,8 +314,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tes">
+</section>
+<section id="tes">
 <h3>tes<a class="headerlink" href="#tes" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -345,8 +345,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tlmt">
+</section>
+<section id="tlmt">
 <h3>tlmt<a class="headerlink" href="#tlmt" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -388,8 +388,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tloc">
+</section>
+<section id="tloc">
 <h3>tloc<a class="headerlink" href="#tloc" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -425,8 +425,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tmsrment">
+</section>
+<section id="tmsrment">
 <h3>tmsrment<a class="headerlink" href="#tmsrment" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -501,8 +501,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="towner">
+</section>
+<section id="towner">
 <h3>towner<a class="headerlink" href="#towner" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -523,8 +523,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tpc">
+</section>
+<section id="tpc">
 <h3>tpc<a class="headerlink" href="#tpc" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -584,8 +584,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tpp">
+</section>
+<section id="tpp">
 <h3>tpp<a class="headerlink" href="#tpp" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -615,8 +615,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tsc">
+</section>
+<section id="tsc">
 <h3>tsc<a class="headerlink" href="#tsc" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -649,8 +649,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tsmpl">
+</section>
+<section id="tsmpl">
 <h3>tsmpl<a class="headerlink" href="#tsmpl" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -710,8 +710,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="tstream">
+</section>
+<section id="tstream">
 <h3>tstream<a class="headerlink" href="#tstream" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -753,8 +753,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="ttdm">
+</section>
+<section id="ttdm">
 <h3>ttdm<a class="headerlink" href="#ttdm" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -787,8 +787,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="ttdm-fmt">
+</section>
+<section id="ttdm-fmt">
 <h3>ttdm_fmt<a class="headerlink" href="#ttdm-fmt" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
@@ -836,9 +836,9 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -906,7 +906,7 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
     <a href="#">Back to Top</a></p>
   <p>
     &copy; Copyright 2012, Tom Aldcroft.<br/>
-    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 3.1.2. &nbsp;
+    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 4.2.0. &nbsp;
   </p>
 </footer>
   </body>
