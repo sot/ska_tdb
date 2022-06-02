@@ -220,8 +220,8 @@ class TableView(object):
     def __getitem__(self, item):
         if isinstance(item, six.string_types):
             item = item.upper()
-            if (item not in self.data.dtype.names and
-                    'MSID' in self.data.dtype.names):
+            if (item not in self.data.dtype.names
+                    and 'MSID' in self.data.dtype.names):
                 ok = self.data['MSID'] == item
                 new_data = self.data[ok]
                 if len(new_data) == 1:
