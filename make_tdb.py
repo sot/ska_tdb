@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 """
-Make the numpy data files that are used by Ska.tdb.  From the repo root directory:
+Make the numpy data files that are used by ska_tdb.  From the repo root directory:
 
 $ ./make_tdb.py
 
-This creates files in ./data/p0<VERSION>/.  These dirs get installed to $SKA/data/Ska.tdb
+This creates files in ./data/p0<VERSION>/.  These dirs get installed to $SKA/data/ska_tdb
 via the Makefile with "make install".
 
 This requires that directories be in /proj/sot/ska/ops/TDB which are the '*.txt' files

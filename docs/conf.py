@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Ska.tdb documentation build configuration file, created by
+# ska_tdb documentation build configuration file, created by
 # sphinx-quickstart on Fri Jan 20 12:46:51 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -21,7 +21,7 @@ import sys, os
 
 rootpath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, rootpath)
-import Ska.tdb
+import ska_tdb
 
 # -- General configuration -----------------------------------------------------
 
@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Ska.tdb'
+project = u'ska_tdb'
 copyright = u'2012, Tom Aldcroft'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -56,7 +56,7 @@ copyright = u'2012, Tom Aldcroft'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-from Ska.tdb import __version__ as release
+from ska_tdb import __version__ as release
 # The short X.Y version.
 version = '.'.join(release.split('.')[:2])
 
@@ -102,8 +102,8 @@ pygments_style = 'sphinx'
 html_theme = 'bootstrap-ska'
 html_theme_options = {
     'logotext1': 'Ska!' ,
-    'logotext2': 'Ska',
-    'logotext3': '.tdb',
+    'logotext2': 'ska_tdb',
+    'logotext3': '',
     'homepage_url': 'https://cxc.cfa.harvard.edu/mta/ASPECT/tool_doc',
     'homepage_text': 'ska',
     'homepage_text_2': 'tools'
@@ -194,7 +194,7 @@ htmlhelp_basename = 'Skatdbdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Skatdb.tex', u'Ska.tdb Documentation',
+  ('index', 'Skatdb.tex', u'ska_tdb Documentation',
    u'Tom Aldcroft', 'manual'),
 ]
 
@@ -227,6 +227,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'skatdb', u'Ska.tdb Documentation',
+    ('index', 'skatdb', u'ska_tdb Documentation',
      [u'Tom Aldcroft'], 1)
 ]

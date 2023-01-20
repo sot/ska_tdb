@@ -1,6 +1,6 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
-import Ska.tdb
-for tablename in sorted(Ska.tdb.tables.keys()):
+import ska_tdb
+for tablename in sorted(ska_tdb.tables.keys()):
     table = tables[tablename]
     print tablename
     print '^^^^^^^^^^^^^^^^^^^^^^^^^'

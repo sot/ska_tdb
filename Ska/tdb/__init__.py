@@ -3,7 +3,7 @@ import ska_helpers
 
 from .tdb import *
 
-__version__ = ska_helpers.get_version('Ska.tdb')
+__version__ = ska_helpers.get_version('ska_tdb')
 
 
 def test(*args, **kwargs):

@@ -1,5 +1,5 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
-"""Ska.tdb: Access the Chandra Telemetry Database
+"""ska_tdb: Access the Chandra Telemetry Database
 
 :Author: Tom Aldcroft
 :Copyright: 2012 Smithsonian Astrophysical Observatory
@@ -66,7 +66,7 @@ def set_tdb_version(version=None):
     global DATA_DIR
     global tables
     global msids
-    version_dirs = glob.glob(os.path.join(SKA, 'data', 'Ska.tdb', 'p0??'))
+    version_dirs = glob.glob(os.path.join(SKA, 'data', 'ska_tdb', 'p0??'))
     TDB_VERSIONS = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
 
     if version is None:
@@ -78,7 +78,7 @@ def set_tdb_version(version=None):
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
     TDB_VERSION = version
-    DATA_DIR = os.path.join(SKA, 'data', 'Ska.tdb', 'p{:03d}'.format(TDB_VERSION))
+    DATA_DIR = os.path.join(SKA, 'data', 'ska_tdb', 'p{:03d}'.format(TDB_VERSION))
     tables = TableDict()
     msids = MsidView()
 
@@ -120,7 +120,7 @@ class TableView(object):
     Examples
     --------
 
-    >>> from Ska.tdb import tables
+    >>> from ska_tdb import tables
     >>> tables.keys()  # show all available tables
     ['tstream',
      'tloc',
@@ -254,7 +254,7 @@ class MsidView(object):
     Examples
     --------
 
-    >>> from Ska.tdb import msids
+    >>> from ska_tdb import msids
     >>> # msids.<TAB>  # See available attributes
     >>> tephin = msids['tephin']
     >>> # tephin.<TAB>  # See available attributes
