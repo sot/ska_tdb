@@ -5,8 +5,8 @@ Make the numpy data files that are used by ska_tdb.  From the repo root director
 
 $ ./make_tdb.py
 
-This creates files in ./data/p0<VERSION>/.  These dirs get installed to $SKA/data/ska_tdb
-via the Makefile with "make install".
+This creates files in ./data/p0<VERSION>/. A new TDB directory here should then be
+copied to ``/proj/sot/ska/data/Ska.tdb/`` on HEAD and GRETA.
 
 This requires that directories be in /proj/sot/ska/ops/TDB which are the '*.txt' files
 that have been created by CXCDS from the MSFC-1949 files.  These are normally supplied
