@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Ska.tdb &#8212; Ska.tdb 3.6.1 documentation</title>
+    <title>ska_tdb &#8212; ska_tdb 4.0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/bootstrap-astropy.css" />
     
@@ -18,12 +18,12 @@
     <script type="text/javascript" src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ska.tdb API documentation" href="Ska.tdb_api.html" />
+    <link rel="next" title="ska_tdb API documentation" href="ska_tdb_api.html" />
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
 
   </head><body>
 <div class="topbar">
-  <a class="brand" title="Documentation Home" href="#"><span id="logotext1">Ska!</span><span id="logotext2">Ska</span><span id="logotext3">.tdb</span></a>
+  <a class="brand" title="Documentation Home" href="#"><span id="logotext1">Ska!</span><span id="logotext2">ska_tdb</span><span id="logotext3"></span></a>
   <ul>
     
     <li><a class="home" title="Homepage" href="https://cxc.cfa.harvard.edu/mta/ASPECT/tool_doc">
@@ -48,12 +48,12 @@
     <h3>Navigation</h3>
     <ul>
       <li class="right">
-	<a href="Ska.tdb_api.html" title="Ska.tdb API documentation">
+	<a href="ska_tdb_api.html" title="ska_tdb API documentation">
 	  next &raquo;
 	</a>
       </li>
       <li>
-	<a href="#">Ska.tdb 3.6.1 documentation</a>
+	<a href="#">ska_tdb 4.0.0 documentation</a>
 	 &#187;
       </li>
       
@@ -68,9 +68,9 @@
           <div class="body" role="main">
             
   <section id="ska-tdb">
-<h1>Ska.tdb<a class="headerlink" href="#ska-tdb" title="Permalink to this headline">¶</a></h1>
+<h1>ska_tdb<a class="headerlink" href="#ska-tdb" title="Permalink to this headline">¶</a></h1>
 <p>Access the Chandra Telemetry Database</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code> package provides a convenient mechanism to retrieve all data in
+<p>The <code class="docutils literal notranslate"><span class="pre">ska_tdb</span></code> package provides a convenient mechanism to retrieve all data in
 the Chandra ODB Telemetry Database (TDB) tables.  The default values correspond
 to the latest definitions available in the CSV (text) dump of the TDB.  Versions
 going back to P004 are also accessible (see <a class="reference internal" href="#tdb-version">TDB version</a>).</p>
@@ -78,7 +78,7 @@ going back to P004 are also accessible (see <a class="reference internal" href="
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>The TDB table entries can be accessed via the module-level variables <code class="docutils literal notranslate"><span class="pre">tables</span></code>
-and <code class="docutils literal notranslate"><span class="pre">msids</span></code>.  The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable is the main workhorse for <code class="docutils literal notranslate"><span class="pre">Ska.tdb</span></code>, while
+and <code class="docutils literal notranslate"><span class="pre">msids</span></code>.  The <code class="docutils literal notranslate"><span class="pre">msids</span></code> variable is the main workhorse for <code class="docutils literal notranslate"><span class="pre">ska_tdb</span></code>, while
 the <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable is needed for tables that do not have an MSID column.</p>
 <section id="msids">
 <h3>Msids<a class="headerlink" href="#msids" title="Permalink to this headline">¶</a></h3>
@@ -88,7 +88,7 @@ MSID.  It behaves like a Python dict where you use the MSID name
 then retrieve all table entries related to that MSID by accessing attributes
 corresponding to the TDB table name.</p>
 <p>Examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">msids</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ska_tdb</span> <span class="kn">import</span> <span class="n">msids</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="o">.&lt;</span><span class="n">TAB</span><span class="o">&gt;</span>  <span class="c1"># See available attributes</span>
 </pre></div>
 </div>
@@ -154,7 +154,7 @@ attributes:</p>
 </div>
 <p>This applies the specified search expression to the MSID name, description, and
 technical description.</p>
-<p>This returns a list of <a class="reference internal" href="Ska.tdb_api.html#Ska.tdb.tdb.MsidView" title="Ska.tdb.tdb.MsidView"><code class="xref py py-class docutils literal notranslate"><span class="pre">MsidView</span></code></a> objects:</p>
+<p>This returns a list of <a class="reference internal" href="ska_tdb_api.html#ska_tdb.tdb.MsidView" title="ska_tdb.tdb.MsidView"><code class="xref py py-class docutils literal notranslate"><span class="pre">MsidView</span></code></a> objects:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHIN&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;EPHIN SENSOR HOUSING TEMP&quot;</span><span class="o">&gt;</span><span class="p">,</span>
  <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRP1&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 PRI (CH0)&quot;</span><span class="o">&gt;</span><span class="p">,</span>
  <span class="o">&lt;</span><span class="n">MsidView</span> <span class="n">msid</span><span class="o">=</span><span class="s2">&quot;TEPHTRP2&quot;</span> <span class="n">technical_name</span><span class="o">=</span><span class="s2">&quot;HTR ENA/DIS: EIA/RCTU-EP/PSU1 PRI (CH1)&quot;</span><span class="o">&gt;</span><span class="p">,</span>
@@ -196,7 +196,7 @@ special dict object that returns a <code class="docutils literal notranslate"><s
 table such as <code class="docutils literal notranslate"><span class="pre">tmsrment</span></code> (MSID descriptions) or <code class="docutils literal notranslate"><span class="pre">tsc</span></code> (MSID state codes).</p>
 <p>After you import the <code class="docutils literal notranslate"><span class="pre">tables</span></code> variable you can ask for the names of all
 available tables:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Ska.tdb</span> <span class="kn">import</span> <span class="n">tables</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ska_tdb</span> <span class="kn">import</span> <span class="n">tables</span>
 <span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># show all available tables</span>
 </pre></div>
 </div>
@@ -253,8 +253,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tlmt</span>
 <span class="go">(&#39;TEPHIN&#39;, 1, 10.0, 150.0, 5.0, 999.0, 0, 5, &#39;A&#39;)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Ska.tdb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Ska</span><span class="o">.</span><span class="n">tdb</span><span class="o">.</span><span class="n">set_tdb_version</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ska_tdb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ska_tdb</span><span class="o">.</span><span class="n">set_tdb_version</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">msids</span><span class="p">[</span><span class="s1">&#39;tephin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Tlmt</span>
 <span class="go">(&#39;TEPHIN&#39;, 1, 10.0, 81.0, 5.0, 86.0, 0, 5, &#39;A&#39;)</span>
@@ -266,8 +266,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 <h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Ska.tdb_api.html">Ska.tdb API documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Ska.tdb_api.html#classes">Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ska_tdb_api.html">ska_tdb API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ska_tdb_api.html#classes">Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -848,7 +848,7 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
 <ul>
-<li><a class="reference internal" href="#">Ska.tdb</a><ul>
+<li><a class="reference internal" href="#">ska_tdb</a><ul>
 <li><a class="reference internal" href="#usage">Usage</a><ul>
 <li><a class="reference internal" href="#msids">Msids</a><ul>
 <li><a class="reference internal" href="#finding-msids">Finding MSIDs</a></li>
@@ -881,8 +881,8 @@ roll back time to P008 when the TEPHIN database limits were much lower:</p>
 
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="Ska.tdb_api.html"
-                        title="next chapter">Ska.tdb API documentation</a></p>
+  <p class="topless"><a href="ska_tdb_api.html"
+                        title="next chapter">ska_tdb API documentation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
