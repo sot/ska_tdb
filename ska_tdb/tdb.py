@@ -1,5 +1,5 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
-"""Ska.tdb: Access the Chandra Telemetry Database
+"""ska_tdb: Access the Chandra Telemetry Database
 
 :Author: Tom Aldcroft
 :Copyright: 2012 Smithsonian Astrophysical Observatory
@@ -120,7 +120,7 @@ class TableView(object):
     Examples
     --------
 
-    >>> from Ska.tdb import tables
+    >>> from ska_tdb import tables
     >>> tables.keys()  # show all available tables
     ['tstream',
      'tloc',
@@ -254,7 +254,7 @@ class MsidView(object):
     Examples
     --------
 
-    >>> from Ska.tdb import msids
+    >>> from ska_tdb import msids
     >>> # msids.<TAB>  # See available attributes
     >>> tephin = msids['tephin']
     >>> # tephin.<TAB>  # See available attributes
