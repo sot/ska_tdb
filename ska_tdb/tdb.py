@@ -6,16 +6,17 @@
 """
 import os
 import re
-import glob
 
 import numpy as np
 import six
+
+from cheta.fetch import local_or_remote_function
 
 __all__ = ['msids', 'tables', 'set_tdb_version', 'get_tdb_version',
            'TableView', 'MsidView']
 
 
-SKA = os.environ.get('SKA', os.path.join(os.sep, 'proj', 'sot', 'ska'))
+SKA = os.environ.get('SKA', '/proj/sot/ska')
 
 # Set None values for module globals that are set in set_tdb_version
 TDB_VERSIONS = None
@@ -52,6 +53,24 @@ TMSRMENT_COLS = """
                 """.lower().split()
 
 
+@local_or_remote_function("Get TDB Versions from remote server...")
+def get_versions(SKA):
+    import os
+    import glob
+
+    version_dirs = glob.glob(os.path.join(SKA, 'data', 'Ska.tdb', 'p0??'))
+    tdb_versions = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
+    return tdb_versions
+
+
+@local_or_remote_function("Get TDB Data Directory from remote server...")
+def get_data_dir(tdb_version, SKA=SKA):
+    import os
+
+    data_dir = os.path.join(SKA, 'data', 'Ska.tdb', 'p{:03d}'.format(tdb_version))
+    return data_dir
+
+
 def set_tdb_version(version=None):
     """
     Set the version of the TDB which is used.
@@ -66,8 +85,7 @@ def set_tdb_version(version=None):
     global DATA_DIR
     global tables
     global msids
-    version_dirs = glob.glob(os.path.join(SKA, 'data', 'Ska.tdb', 'p0??'))
-    TDB_VERSIONS = sorted([int(os.path.basename(vdir)[2:]) for vdir in version_dirs])
+    TDB_VERSIONS = get_versions(SKA)
 
     if version is None:
         if TDB_VERSIONS:
@@ -78,7 +96,7 @@ def set_tdb_version(version=None):
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
     TDB_VERSION = version
-    DATA_DIR = os.path.join(SKA, 'data', 'Ska.tdb', 'p{:03d}'.format(TDB_VERSION))
+    DATA_DIR = get_data_dir(TDB_VERSION, SKA)
     tables = TableDict()
     msids = MsidView()
 
@@ -91,18 +109,28 @@ def get_tdb_version():
 
 
 class TableDict(dict):
+    @local_or_remote_function("Loading file from remote server...")
+    def _read_npy_file(item, data_dir):
+        filename = os.path.join(data_dir, item + '.npy')
+        tv = TableView(np.load(filename))
+        return filename, tv
+
+    @local_or_remote_function("Finding *.npy files on remote server...")
+    def _get_all_npy_files(data_dir):
+        import glob
+        files = glob.glob(os.path.join(data_dir, '*.npy'))
+        return files
+
     def __getitem__(self, item):
         if item not in self:
             try:
-                filename = os.path.join(DATA_DIR, item + '.npy')
-                self[item] = TableView(np.load(filename))
+                filename, self[item] = TableDict._read_npy_file(item, DATA_DIR)
             except IOError:
                 raise KeyError("Table {} not in TDB files (no file {})".format(item, filename))
         return dict.__getitem__(self, item)
 
     def keys(self):
-        import glob
-        files = glob.glob(os.path.join(DATA_DIR, '*.npy'))
+        files = TableDict._get_all_npy_files(DATA_DIR)
         return [os.path.basename(x)[:-4] for x in files]
 
 
