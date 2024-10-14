@@ -1,6 +1,11 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
-from .. import msids, tables, set_tdb_version, get_tdb_version
+import os
+import pytest
 
+from .. import msids, tables, set_tdb_version, get_tdb_version
+from ska_tdb.tdb import get_data_path
+
+SKA_ACCESS_REMOTELY = os.environ.get("SKA_ACCESS_REMOTELY") == "True"
 # Set to fixed version for regression testing
 TDB_VERSION = 14
 set_tdb_version(TDB_VERSION)
@@ -12,6 +17,10 @@ tmsrment_colnames = (
     'LIMIT_DEFAULT_SET_NUM', 'ES_SWITCH_MSID', 'ES_DEFAULT_SET_NUM', 'OWNER_ID',
     'DESCRIPTION', 'EHS_HEADER_FLAG')
 
+
+@pytest.mark.skipif(not SKA_ACCESS_REMOTELY, reason="remote access not being tested")
+def test_remote_access():
+    assert str(get_data_path()) == "/proj/sot/ska3/flight/data/Ska.tdb"
 
 def test_msids():
     tephin = msids['tephin']
