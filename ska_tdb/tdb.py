@@ -60,10 +60,10 @@ def get_versions():
     return tdb_versions
 
 
-@local_or_remote_function("Get TDB Versions from remote server...")
-def get_data_path():
+@local_or_remote_function("Get TDB Data Directory from remote server...")
+def get_data_path(version):
     from pathlib import Path  # noqa
-    return Path(os.environ["SKA"]) / "data" / "Ska.tdb"
+    return str(Path(os.environ["SKA"]) / "data" / "Ska.tdb" / f"p{version:03d}")
 
 
 @local_or_remote_function("Loading file from remote server...")
@@ -105,7 +105,7 @@ def set_tdb_version(version=None):
         raise ValueError('TDB version must be one of the following: {}'.format(TDB_VERSIONS))
 
     TDB_VERSION = version
-    DATA_DIR = get_data_path() / f"p{version:03d}"
+    DATA_DIR = get_data_path(version)
     tables = TableDict()
     msids = MsidView()
 
