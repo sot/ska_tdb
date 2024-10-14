@@ -20,7 +20,8 @@ tmsrment_colnames = (
 
 @pytest.mark.skipif(not SKA_ACCESS_REMOTELY, reason="remote access not being tested")
 def test_remote_access():
-    assert str(get_data_path()) == "/proj/sot/ska3/flight/data/Ska.tdb"
+    assert str(get_data_path(10)) == "/proj/sot/ska3/flight/data/Ska.tdb/p010"
+
 
 def test_msids():
     tephin = msids['tephin']
